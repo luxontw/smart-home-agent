@@ -1,0 +1,18 @@
+{
+    "devices": {
+        "living_room": {
+            "lights": {
+                "led_strip": {
+                    "state": "on",
+                    "brightness": 100,
+                    "rgb_color": [
+                        255,
+                        0,
+                        0
+                    ],
+                    "effect": "Bpm"
+                }
+            }
+        }
+    }
+}
