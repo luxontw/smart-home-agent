@@ -1,0 +1,2257 @@
+{
+    "id": 30,
+    "type": "result",
+    "success": true,
+    "result": [
+        {
+            "entity_id": "person.iot_20230726",
+            "state": "not_home",
+            "attributes": {
+                "editable": true,
+                "id": "iot_20230726",
+                "latitude": 24.5377258,
+                "longitude": 120.7886761,
+                "gps_accuracy": 10,
+                "source": "device_tracker.in2015_2",
+                "user_id": "abdd7fe7a32a44258f3a06e29a0ae095",
+                "device_trackers": [
+                    "device_tracker.in2015",
+                    "device_tracker.in2015_2"
+                ],
+                "friendly_name": "iot_20230726"
+            },
+            "last_changed": "2023-09-28T02:36:54.960817+00:00",
+            "last_updated": "2023-09-28T05:00:41.164585+00:00",
+            "context": {
+                "id": "01HBD2J6ACFTPC3YCRRQ1RJXDS",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "person.websocket",
+            "state": "unknown",
+            "attributes": {
+                "editable": true,
+                "id": "websocket",
+                "user_id": "e21c80c23b494a828e772d49d9618524",
+                "device_trackers": [],
+                "friendly_name": "websocket"
+            },
+            "last_changed": "2023-09-26T03:04:56.426735+00:00",
+            "last_updated": "2023-09-26T03:06:08.705792+00:00",
+            "context": {
+                "id": "01HB7Q70Y1XYV0TR1FNJTRS3KD",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "person.guan_li_yuan",
+            "state": "unknown",
+            "attributes": {
+                "editable": true,
+                "id": "guan_li_yuan",
+                "user_id": "04720ddd95db425fbf13f2a7a7a3319a",
+                "device_trackers": [],
+                "friendly_name": "guest"
+            },
+            "last_changed": "2023-09-26T03:04:56.428392+00:00",
+            "last_updated": "2023-09-26T03:06:08.706590+00:00",
+            "context": {
+                "id": "01HB7Q70Y2FMY5SAAZ46B0K5BY",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "person.wmnlab",
+            "state": "unknown",
+            "attributes": {
+                "editable": true,
+                "id": "wmnlab",
+                "user_id": "6c4c523b4818461ea65ce8cfdcc6d287",
+                "device_trackers": [],
+                "friendly_name": "wmnlab"
+            },
+            "last_changed": "2023-09-26T03:04:56.429131+00:00",
+            "last_updated": "2023-09-26T03:06:08.707341+00:00",
+            "context": {
+                "id": "01HB7Q70Y3FN87WGVT5AB24QJA",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.home_assistant_supervisor_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "2023.09.2",
+                "in_progress": false,
+                "latest_version": "2023.09.2",
+                "release_summary": null,
+                "release_url": "https://github.com/home-assistant/supervisor/releases/tag/2023.09.2",
+                "skipped_version": null,
+                "title": "Home Assistant Supervisor",
+                "entity_picture": "https://brands.home-assistant.io/hassio/icon.png",
+                "friendly_name": "Home Assistant Supervisor Update",
+                "supported_features": 1
+            },
+            "last_changed": "2023-09-26T03:05:34.525770+00:00",
+            "last_updated": "2023-09-26T03:05:34.525770+00:00",
+            "context": {
+                "id": "01HB7Q5ZHX20GXGE71FM3YDD1K",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.home_assistant_core_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": false,
+                "installed_version": "2023.9.3",
+                "in_progress": false,
+                "latest_version": "2023.9.3",
+                "release_summary": null,
+                "release_url": "https://www.home-assistant.io/latest-release-notes/",
+                "skipped_version": null,
+                "title": "Home Assistant Core",
+                "entity_picture": "https://brands.home-assistant.io/homeassistant/icon.png",
+                "friendly_name": "Home Assistant Core Update",
+                "supported_features": 11
+            },
+            "last_changed": "2023-09-26T03:05:34.528344+00:00",
+            "last_updated": "2023-09-26T03:05:34.528344+00:00",
+            "context": {
+                "id": "01HB7Q5ZJ0W3TMGG58M90B4AMC",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.terminal_ssh_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "9.7.1",
+                "in_progress": false,
+                "latest_version": "9.7.1",
+                "release_summary": "# Changelog\n\n## 9.7.1\n\n- Upgrade Home Assistant CLI to 4.26.0\n\n## 9.7.0\n\n- Upgrade Home Assistant CLI to 4.23.0\n- Upgrade to Alpine 3.17\n- Update ttyd to 1.7.3\n- Update libwebsockets to 4.3.2\n\n## 9.6.2\n\n- Make SUPERVISOR_TOKEN available as an SSH environm",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "Terminal & SSH",
+                "entity_picture": "/api/hassio/addons/core_ssh/icon",
+                "friendly_name": "Terminal & SSH Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.530094+00:00",
+            "last_updated": "2023-09-26T03:05:34.530094+00:00",
+            "context": {
+                "id": "01HB7Q5ZJ2QHP8S9T9ZTCFPMP2",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.mosquitto_broker_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "6.3.1",
+                "in_progress": false,
+                "latest_version": "6.3.1",
+                "release_summary": "# Changelog\n\n## 6.3.1\n\n- Add ability to use a pre-hashed password for custom logins\n\n## 6.3.0\n\n- Update mosquitto to 2.0.17\n\n## 6.2.1\n\n- Add explicit dependencies for dynamic security plugin and asynchronous name resolver \n\n## 6.2.0\n\n- Update mosquitto to",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "Mosquitto broker",
+                "entity_picture": "/api/hassio/addons/core_mosquitto/icon",
+                "friendly_name": "Mosquitto broker Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.531687+00:00",
+            "last_updated": "2023-09-26T03:05:34.531687+00:00",
+            "context": {
+                "id": "01HB7Q5ZJ3A2ABHFC29RA9BW54",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.rpc_shutdown_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": false,
+                "installed_version": "2.4",
+                "in_progress": false,
+                "latest_version": "2.4",
+                "release_summary": "# Changelog\n\n## 2.4\n\n- Update to Alpine 3.17\n\n## 2.3\n\n- Allow '%' sign in the password\n\n## 2.2\n\n- Set delay to zero when it is empty (to not break existing configurations) (bugfix)\n\n## 2.1\n\n- Set delay to zero when it is empty (to not break existing confi",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "RPC Shutdown",
+                "entity_picture": "/api/hassio/addons/core_rpc_shutdown/icon",
+                "friendly_name": "RPC Shutdown Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.534451+00:00",
+            "last_updated": "2023-09-26T03:05:34.534451+00:00",
+            "context": {
+                "id": "01HB7Q5ZJ6ADEVRP3T42SYDV7N",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.file_editor_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "5.6.0",
+                "in_progress": false,
+                "latest_version": "5.6.0",
+                "release_summary": "# Changelog\n\n## 5.6.0\n\n- Update base image to Alpine 3.17\n- Migrate old style S6 Overlay service scripts to new `s6-rc.d` style\n- Add Docker healthchecks\n\n## 5.5.1\n\n- Fix Home Assistant wheels path\n\n## 5.5.0\n\n- Update base image to Alpine 3.16\n  - Bumps `",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "File editor",
+                "entity_picture": "/api/hassio/addons/core_configurator/icon",
+                "friendly_name": "File editor Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.535894+00:00",
+            "last_updated": "2023-09-26T03:05:34.535894+00:00",
+            "context": {
+                "id": "01HB7Q5ZJ767936W31T18Q472D",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.cloudflared_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "4.2.7",
+                "in_progress": false,
+                "latest_version": "4.2.7",
+                "release_summary": "## What’s changed\n## 📚 Documentation\n\n- Fix broken Link to Cloudflare Set-Up @brenner-tobias (#477)\n\n## ⬆️ Dependency updates\n\n- ⬆️ Update actions/checkout action to v4 @renovate (#469)\n- ⬆️ Update docker/build-push-action action to v5 @renovate (#479)\n- ",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "Cloudflared",
+                "entity_picture": "/api/hassio/addons/9074a9fa_cloudflared/icon",
+                "friendly_name": "Cloudflared Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.537323+00:00",
+            "last_updated": "2023-09-26T03:05:34.537323+00:00",
+            "context": {
+                "id": "01HB7Q5ZJ9Z8AKHB79K34M3MXC",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.let_s_encrypt_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "4.12.9",
+                "in_progress": false,
+                "latest_version": "4.12.9",
+                "release_summary": "# Changelog\n\n## 4.12.9\n\n- Add Google Domains DNS challenge support\n\n## 4.12.8\n\n- Add INWX DNS challenge support\n\n## 4.12.7\n\n- Add Hetzner DNS challenge support\n\n## 4.12.6\n\n- Add Azure DNS challenge support\n\n## 4.12.5\n\n- Fix another syntax error in runs sc",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "Let's Encrypt",
+                "entity_picture": "/api/hassio/addons/core_letsencrypt/icon",
+                "friendly_name": "Let's Encrypt Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.538910+00:00",
+            "last_updated": "2023-09-26T03:05:34.538910+00:00",
+            "context": {
+                "id": "01HB7Q5ZJAHWKSK23Q2470F3YC",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.tailscale_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "0.11.1",
+                "in_progress": false,
+                "latest_version": "0.11.1",
+                "release_summary": "## What’s changed\n\n## 🐛 Bug fixes\n\n- Fix typo \"login_server: unbound variable\" @Saoclyph ([#182](https://github.com/hassio-addons/addon-tailscale/pull/182))\n",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "Tailscale",
+                "entity_picture": "/api/hassio/addons/a0d7b954_tailscale/icon",
+                "friendly_name": "Tailscale Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.540316+00:00",
+            "last_updated": "2023-09-26T03:05:34.540316+00:00",
+            "context": {
+                "id": "01HB7Q5ZJCHRWKBASS16MZN8KS",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.node_red_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": true,
+                "installed_version": "14.5.0",
+                "in_progress": false,
+                "latest_version": "14.5.0",
+                "release_summary": "## What’s changed\n\nShips with Node-RED v3.1\n\n## ✨ New features\n\n- Add new themes introduced in @node-red-contrib-themes/theme-collection v3.1 @bonanitech ([#1672](https://github.com/hassio-addons/addon-node-red/pull/1672))\n\n## ⬆️ Dependency updates\n\n- ⬆️ ",
+                "release_url": null,
+                "skipped_version": null,
+                "title": "Node-RED",
+                "entity_picture": "/api/hassio/addons/a0d7b954_nodered/icon",
+                "friendly_name": "Node-RED Update",
+                "supported_features": 25
+            },
+            "last_changed": "2023-09-26T03:05:34.541613+00:00",
+            "last_updated": "2023-09-26T03:05:34.541613+00:00",
+            "context": {
+                "id": "01HB7Q5ZJD8GXZV83WNKMBNC3Q",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.home_assistant_operating_system_update",
+            "state": "off",
+            "attributes": {
+                "auto_update": false,
+                "installed_version": "10.5",
+                "in_progress": false,
+                "latest_version": "10.5",
+                "release_summary": null,
+                "release_url": "https://github.com/home-assistant/operating-system/releases/tag/10.5",
+                "skipped_version": null,
+                "title": "Home Assistant Operating System",
+                "entity_picture": "https://brands.home-assistant.io/homeassistant/icon.png",
+                "friendly_name": "Home Assistant Operating System Update",
+                "supported_features": 3
+            },
+            "last_changed": "2023-09-26T03:05:34.544182+00:00",
+            "last_updated": "2023-09-26T03:05:34.544182+00:00",
+            "context": {
+                "id": "01HB7Q5ZJGJ2TDGMN7KKNWP8DV",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sun.sun",
+            "state": "above_horizon",
+            "attributes": {
+                "next_dawn": "2023-09-29T21:25:06.471460+00:00",
+                "next_dusk": "2023-09-29T10:09:28.024853+00:00",
+                "next_midnight": "2023-09-29T15:46:58+00:00",
+                "next_noon": "2023-09-30T03:47:00+00:00",
+                "next_rising": "2023-09-29T21:48:16.960873+00:00",
+                "next_setting": "2023-09-29T09:46:19.253490+00:00",
+                "elevation": 4.22,
+                "azimuth": 265.53,
+                "rising": false,
+                "friendly_name": "Sun"
+            },
+            "last_changed": "2023-09-28T21:47:54.353571+00:00",
+            "last_updated": "2023-09-29T09:25:06.758779+00:00",
+            "context": {
+                "id": "01HBG43326NW5RJC9RMY6H4KKD",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "zone.wo_shi",
+            "state": "0",
+            "attributes": {
+                "latitude": 24.57023998550211,
+                "longitude": 120.81111965719865,
+                "radius": 4.0,
+                "passive": false,
+                "persons": [],
+                "editable": true,
+                "icon": "mdi:map-marker",
+                "friendly_name": "臥室"
+            },
+            "last_changed": "2023-09-26T03:05:40.789168+00:00",
+            "last_updated": "2023-09-26T03:05:40.789168+00:00",
+            "context": {
+                "id": "01HB7Q65NNS9MYQ8PYP11RTHX9",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "zone.home",
+            "state": "0",
+            "attributes": {
+                "latitude": 24.570242944769788,
+                "longitude": 120.81112101674081,
+                "radius": 100,
+                "passive": false,
+                "persons": [],
+                "editable": true,
+                "icon": "mdi:home",
+                "friendly_name": "智慧家居系統"
+            },
+            "last_changed": "2023-09-28T02:36:54.970089+00:00",
+            "last_updated": "2023-09-28T02:36:54.970089+00:00",
+            "context": {
+                "id": "01HBCTAY9TGNZCENH0P11RQRWA",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "tts.google_en_com",
+            "state": "unknown",
+            "attributes": {
+                "friendly_name": "Google en com"
+            },
+            "last_changed": "2023-09-26T03:06:06.026501+00:00",
+            "last_updated": "2023-09-26T03:06:06.026501+00:00",
+            "context": {
+                "id": "01HB7Q6YAA1ZQFVV4JQ884JW70",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.sun_next_dawn",
+            "state": "2023-09-29T21:25:06+00:00",
+            "attributes": {
+                "device_class": "timestamp",
+                "icon": "mdi:sun-clock",
+                "friendly_name": "Sun 下次清晨"
+            },
+            "last_changed": "2023-09-28T21:24:47.931368+00:00",
+            "last_updated": "2023-09-28T21:24:47.931368+00:00",
+            "context": {
+                "id": "01HBETW55VWGG67JRPH0V1DJKC",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.sun_next_dusk",
+            "state": "2023-09-29T10:09:28+00:00",
+            "attributes": {
+                "device_class": "timestamp",
+                "icon": "mdi:sun-clock",
+                "friendly_name": "Sun 下次黃昏"
+            },
+            "last_changed": "2023-09-28T10:10:45.817082+00:00",
+            "last_updated": "2023-09-28T10:10:45.817082+00:00",
+            "context": {
+                "id": "01HBDM9YXSXG3VRT5344EX1HP8",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.sun_next_midnight",
+            "state": "2023-09-29T15:46:58+00:00",
+            "attributes": {
+                "device_class": "timestamp",
+                "icon": "mdi:sun-clock",
+                "friendly_name": "Sun 下次午夜"
+            },
+            "last_changed": "2023-09-28T15:47:46.850130+00:00",
+            "last_updated": "2023-09-28T15:47:46.850130+00:00",
+            "context": {
+                "id": "01HBE7K212PF3EW3GVH236SYSD",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.sun_next_noon",
+            "state": "2023-09-30T03:47:00+00:00",
+            "attributes": {
+                "device_class": "timestamp",
+                "icon": "mdi:sun-clock",
+                "friendly_name": "Sun 下次正午"
+            },
+            "last_changed": "2023-09-29T03:47:49.206079+00:00",
+            "last_updated": "2023-09-29T03:47:49.206079+00:00",
+            "context": {
+                "id": "01HBFGSFTPG50JXF9PKHZVBBHW",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.sun_next_rising",
+            "state": "2023-09-29T21:48:16+00:00",
+            "attributes": {
+                "device_class": "timestamp",
+                "icon": "mdi:sun-clock",
+                "friendly_name": "Sun 下次日出"
+            },
+            "last_changed": "2023-09-28T21:48:18.018022+00:00",
+            "last_updated": "2023-09-28T21:48:18.018022+00:00",
+            "context": {
+                "id": "01HBEW7672KZT4JAASZFH86BHM",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.sun_next_setting",
+            "state": "2023-09-29T09:46:19+00:00",
+            "attributes": {
+                "device_class": "timestamp",
+                "icon": "mdi:sun-clock",
+                "friendly_name": "Sun 下次日落"
+            },
+            "last_changed": "2023-09-28T09:47:45.758950+00:00",
+            "last_updated": "2023-09-28T09:47:45.758950+00:00",
+            "context": {
+                "id": "01HBDJZV6YER2EQ07VCT0AQMT1",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "fan.dian_feng_shan_socket_1",
+            "state": "off",
+            "attributes": {
+                "friendly_name": "fan",
+                "supported_features": 0
+            },
+            "last_changed": "2023-09-26T21:06:57.655308+00:00",
+            "last_updated": "2023-09-26T21:06:57.655308+00:00",
+            "context": {
+                "id": "01HB9N21ZQGM08A5PZ0RDNGAMP",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "binary_sensor.rpi_power_status",
+            "state": "off",
+            "attributes": {
+                "device_class": "problem",
+                "icon": "mdi:raspberry-pi",
+                "friendly_name": "RPi Power status"
+            },
+            "last_changed": "2023-09-26T03:06:06.310655+00:00",
+            "last_updated": "2023-09-26T03:06:06.310655+00:00",
+            "context": {
+                "id": "01HB7Q6YK6KMRW991894ZMWGP7",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "fan.kong_qi_jing_hua_qi",
+            "state": "on",
+            "attributes": {
+                "preset_modes": [
+                    "Auto",
+                    "Silent",
+                    "Favorite",
+                    "Idle"
+                ],
+                "preset_mode": "Auto",
+                "extra_features": 0,
+                "turbo_mode_supported": false,
+                "button_pressed": "power",
+                "sleep_time": 81972,
+                "sleep_mode_learn_count": 30,
+                "use_time": 41114100,
+                "sleep_mode": "silent",
+                "friendly_name": "空氣淨化器",
+                "supported_features": 8
+            },
+            "last_changed": "2023-09-29T08:52:10.498038+00:00",
+            "last_updated": "2023-09-29T09:26:10.503495+00:00",
+            "context": {
+                "id": "01HBG451A7KJMSTSG5S1E277SA",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "number.kong_qi_jing_hua_qi_favorite_level",
+            "state": "14",
+            "attributes": {
+                "min": 0,
+                "max": 17,
+                "step": 1,
+                "mode": "auto",
+                "icon": "mdi:star-cog",
+                "friendly_name": "空氣淨化器 Favorite level"
+            },
+            "last_changed": "2023-09-27T00:59:45.514875+00:00",
+            "last_updated": "2023-09-27T00:59:45.514875+00:00",
+            "context": {
+                "id": "01HBA2CAFAC8JE7SBAMSMPDYR4",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "select.kong_qi_jing_hua_qi_mode",
+            "state": "auto",
+            "attributes": {
+                "options": [
+                    "silent",
+                    "auto",
+                    "favorite"
+                ],
+                "icon": "mdi:fan",
+                "friendly_name": "空氣淨化器 Mode"
+            },
+            "last_changed": "2023-09-27T00:59:45.516187+00:00",
+            "last_updated": "2023-09-27T00:59:45.516187+00:00",
+            "context": {
+                "id": "01HBA2CAFCKTWTXH7QAY6HC0CR",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.kong_qi_jing_hua_qi_temperature",
+            "state": "30.8",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "°C",
+                "device_class": "temperature",
+                "friendly_name": "空氣淨化器 Temperature"
+            },
+            "last_changed": "2023-09-29T09:24:25.498510+00:00",
+            "last_updated": "2023-09-29T09:24:25.498510+00:00",
+            "context": {
+                "id": "01HBG41TRTES7Y22AAVK1AWBY7",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.kong_qi_jing_hua_qi_humidity",
+            "state": "70",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "%",
+                "device_class": "humidity",
+                "friendly_name": "空氣淨化器 Humidity"
+            },
+            "last_changed": "2023-09-29T09:01:25.497434+00:00",
+            "last_updated": "2023-09-29T09:01:25.497434+00:00",
+            "context": {
+                "id": "01HBG2QQ3SK058AV7821HCYWHG",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.kong_qi_jing_hua_qi_motor_speed",
+            "state": "347",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "rpm",
+                "icon": "mdi:fast-forward",
+                "friendly_name": "空氣淨化器 Motor speed"
+            },
+            "last_changed": "2023-09-29T09:26:10.505353+00:00",
+            "last_updated": "2023-09-29T09:26:10.505353+00:00",
+            "context": {
+                "id": "01HBG451A9292RASV816F756JS",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.kong_qi_jing_hua_qi_illuminance",
+            "state": "0",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "lm",
+                "friendly_name": "空氣淨化器 Illuminance"
+            },
+            "last_changed": "2023-09-29T08:52:10.501561+00:00",
+            "last_updated": "2023-09-29T08:52:10.501561+00:00",
+            "context": {
+                "id": "01HBG26S45SRJXESMK551YWMZ0",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.kong_qi_jing_hua_qi_pm2_5",
+            "state": "7",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "µg/m³",
+                "device_class": "pm25",
+                "friendly_name": "空氣淨化器 PM2.5"
+            },
+            "last_changed": "2023-09-29T09:25:10.495047+00:00",
+            "last_updated": "2023-09-29T09:25:10.495047+00:00",
+            "context": {
+                "id": "01HBG436PZS9ZA2P91F1GBK96F",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.kong_qi_jing_hua_qi_filter_lifetime_remaining",
+            "state": "93",
+            "attributes": {
+                "state_class": "measurement",
+                "filter_type": "unknown",
+                "unit_of_measurement": "%",
+                "icon": "mdi:air-filter",
+                "friendly_name": "空氣淨化器 Filter lifetime remaining"
+            },
+            "last_changed": "2023-09-27T00:59:45.525342+00:00",
+            "last_updated": "2023-09-27T00:59:45.525342+00:00",
+            "context": {
+                "id": "01HBA2CAFNFZSV96MVJJ1XBC6C",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.kong_qi_jing_hua_qi_filter_use",
+            "state": "212",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "h",
+                "device_class": "duration",
+                "icon": "mdi:clock-outline",
+                "friendly_name": "空氣淨化器 Filter use"
+            },
+            "last_changed": "2023-09-29T09:21:10.501293+00:00",
+            "last_updated": "2023-09-29T09:21:10.501293+00:00",
+            "context": {
+                "id": "01HBG3VWB554BXCRAGH3TDHK2C",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "weather.forecast_home",
+            "state": "partlycloudy",
+            "attributes": {
+                "temperature": 31.1,
+                "dew_point": 24.7,
+                "temperature_unit": "°C",
+                "humidity": 68,
+                "cloud_coverage": 14.8,
+                "pressure": 1008.4,
+                "pressure_unit": "hPa",
+                "wind_bearing": 6.9,
+                "wind_speed": 41.8,
+                "wind_speed_unit": "km/h",
+                "visibility_unit": "km",
+                "precipitation_unit": "mm",
+                "forecast": [
+                    {
+                        "condition": "partlycloudy",
+                        "datetime": "2023-09-29T04:00:00+00:00",
+                        "wind_bearing": 6.9,
+                        "temperature": 31.1,
+                        "templow": 27.3,
+                        "wind_speed": 41.8,
+                        "precipitation": 0.0,
+                        "humidity": 68
+                    },
+                    {
+                        "condition": "rainy",
+                        "datetime": "2023-09-30T04:00:00+00:00",
+                        "wind_bearing": 3.5,
+                        "temperature": 31.3,
+                        "templow": 24.5,
+                        "wind_speed": 40.0,
+                        "precipitation": 1.9,
+                        "humidity": 71
+                    },
+                    {
+                        "condition": "sunny",
+                        "datetime": "2023-10-01T04:00:00+00:00",
+                        "wind_bearing": 17.9,
+                        "temperature": 32.4,
+                        "templow": 25.3,
+                        "wind_speed": 54.0,
+                        "precipitation": 0.0,
+                        "humidity": 52
+                    },
+                    {
+                        "condition": "sunny",
+                        "datetime": "2023-10-02T04:00:00+00:00",
+                        "wind_bearing": 22.1,
+                        "temperature": 30.1,
+                        "templow": 25.2,
+                        "wind_speed": 45.0,
+                        "precipitation": 0.0,
+                        "humidity": 55
+                    },
+                    {
+                        "condition": "sunny",
+                        "datetime": "2023-10-03T04:00:00+00:00",
+                        "wind_bearing": 19.1,
+                        "temperature": 30.5,
+                        "templow": 24.7,
+                        "wind_speed": 34.2,
+                        "precipitation": 0.0,
+                        "humidity": 48
+                    },
+                    {
+                        "condition": "cloudy",
+                        "datetime": "2023-10-04T04:00:00+00:00",
+                        "wind_bearing": 27.9,
+                        "temperature": 29.5,
+                        "templow": 25.9,
+                        "wind_speed": 45.7,
+                        "precipitation": 1.5,
+                        "humidity": 71
+                    }
+                ],
+                "attribution": "Weather forecast from met.no, delivered by the Norwegian Meteorological Institute.",
+                "friendly_name": "Forecast Home",
+                "supported_features": 3
+            },
+            "last_changed": "2023-09-29T08:27:46.190970+00:00",
+            "last_updated": "2023-09-29T09:25:47.207127+00:00",
+            "context": {
+                "id": "01HBG44AJ7EYV6SZBEXXAHX7PH",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.hacs",
+            "state": "1",
+            "attributes": {
+                "repositories": [
+                    {
+                        "name": "hacs/integration",
+                        "display_name": "HACS",
+                        "installed_version": "1.32.1",
+                        "available_version": "1.33.0"
+                    }
+                ],
+                "unit_of_measurement": "pending update(s)",
+                "icon": "hacs:hacs",
+                "friendly_name": "hacs"
+            },
+            "last_changed": "2023-09-26T03:06:10.288485+00:00",
+            "last_updated": "2023-09-26T03:06:10.288485+00:00",
+            "context": {
+                "id": "01HB7Q72FGXB1QMBPRWE3Y35GS",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_storage",
+            "state": "52.29",
+            "attributes": {
+                "Available": "62.05 GB",
+                "Available (Important)": "73.19 GB",
+                "Available (Opportunistic)": "66.90 GB",
+                "Total": "127.93 GB",
+                "unit_of_measurement": "% available",
+                "icon": "mdi:database",
+                "friendly_name": "123 Storage"
+            },
+            "last_changed": "2023-09-28T08:36:27.991801+00:00",
+            "last_updated": "2023-09-28T08:36:27.991801+00:00",
+            "context": {
+                "id": "01HBDEX9PQ8FY1DDJVG3P6V2CS",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_battery_level",
+            "state": "45",
+            "attributes": {
+                "unit_of_measurement": "%",
+                "device_class": "battery",
+                "icon": "mdi:battery-40",
+                "friendly_name": "123 Battery Level"
+            },
+            "last_changed": "2023-09-28T08:36:27.986681+00:00",
+            "last_updated": "2023-09-28T08:36:27.986681+00:00",
+            "context": {
+                "id": "01HBDEX9PJNN5CK0WV42YVMRT6",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_bssid",
+            "state": "f4:28:53:7d:9a:3c",
+            "attributes": {
+                "icon": "mdi:wifi-star",
+                "friendly_name": "123 BSSID"
+            },
+            "last_changed": "2023-09-26T03:06:06.448934+00:00",
+            "last_updated": "2023-09-26T03:06:06.448934+00:00",
+            "context": {
+                "id": "01HB7Q6YQG6V3M332H0DEGQ31S",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_battery_state",
+            "state": "Not Charging",
+            "attributes": {
+                "Low Power Mode": true,
+                "icon": "mdi:battery-40",
+                "friendly_name": "123 Battery State"
+            },
+            "last_changed": "2023-09-27T12:32:23.923065+00:00",
+            "last_updated": "2023-09-28T08:36:27.990462+00:00",
+            "context": {
+                "id": "01HBDEX9PPJ0A183JAHMPZ1JJ5",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_connection_type",
+            "state": "Wi-Fi",
+            "attributes": {
+                "icon": "mdi:wifi",
+                "friendly_name": "123 Connection Type"
+            },
+            "last_changed": "2023-09-26T03:06:06.451733+00:00",
+            "last_updated": "2023-09-26T03:06:06.451733+00:00",
+            "context": {
+                "id": "01HB7Q6YQKFF8V0YN39RE3F4AD",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_ssid",
+            "state": "2.432 GHz",
+            "attributes": {
+                "icon": "mdi:wifi",
+                "friendly_name": "123 SSID"
+            },
+            "last_changed": "2023-09-26T03:06:06.453096+00:00",
+            "last_updated": "2023-09-26T03:06:06.453096+00:00",
+            "context": {
+                "id": "01HB7Q6YQNQWMV5JR6YCZ11CND",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_geocoded_location",
+            "state": "台灣\n360031 MIA 苗栗市\n文發路157巷50號",
+            "attributes": {
+                "Administrative Area": "MIA",
+                "Areas Of Interest": [
+                    "臺灣島"
+                ],
+                "Country": "台灣",
+                "Inland Water": "N/A",
+                "ISO Country Code": "TW",
+                "Locality": "苗栗市",
+                "Location": [
+                    24.570205688476562,
+                    120.8111746482241
+                ],
+                "Name": "文發路157巷50號",
+                "Ocean": "N/A",
+                "Postal Code": "360031",
+                "Sub Administrative Area": "苗栗縣",
+                "Sub Locality": "文山里",
+                "Sub Thoroughfare": "50號",
+                "Thoroughfare": "文發路157巷",
+                "Time Zone": "Asia/Taipei",
+                "Zones": [
+                    "智慧家居系統"
+                ],
+                "icon": "mdi:map",
+                "friendly_name": "123 Geocoded Location"
+            },
+            "last_changed": "2023-09-26T03:06:06.454373+00:00",
+            "last_updated": "2023-09-26T17:30:45.345924+00:00",
+            "context": {
+                "id": "01HB98P5Q1VBKHCMG3HGMY6ACF",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_sim_2",
+            "state": "N/A",
+            "attributes": {
+                "Allows VoIP": true,
+                "Carrier ID": "0000000100000002",
+                "Carrier Name": "N/A",
+                "ISO Country Code": "N/A",
+                "Mobile Country Code": "N/A",
+                "Mobile Network Code": "N/A",
+                "icon": "mdi:sim",
+                "friendly_name": "123 SIM 2"
+            },
+            "last_changed": "2023-09-26T03:06:06.455703+00:00",
+            "last_updated": "2023-09-26T03:06:06.455703+00:00",
+            "context": {
+                "id": "01HB7Q6YQQGH65WNX9RGJE0STJ",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_last_update_trigger",
+            "state": "Signaled",
+            "attributes": {
+                "icon": "mdi:cellphone-wireless",
+                "friendly_name": "123 Last Update Trigger"
+            },
+            "last_changed": "2023-09-28T08:36:27.995533+00:00",
+            "last_updated": "2023-09-28T08:36:27.995533+00:00",
+            "context": {
+                "id": "01HBDEX9PVAQ4BAPCV1H0P4XHF",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_sim_1",
+            "state": "中華電信",
+            "attributes": {
+                "Allows VoIP": true,
+                "Carrier ID": "0000000100000001",
+                "Carrier Name": "中華電信",
+                "Current Radio Technology": "Long-Term Evolution (LTE)",
+                "ISO Country Code": "tw",
+                "Mobile Country Code": "466",
+                "Mobile Network Code": "92",
+                "icon": "mdi:sim",
+                "friendly_name": "123 SIM 1"
+            },
+            "last_changed": "2023-09-26T03:06:06.459590+00:00",
+            "last_updated": "2023-09-26T03:06:06.459590+00:00",
+            "context": {
+                "id": "01HB7Q6YQVC4JFCNY2E8DQ03V2",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_activity",
+            "state": "Unknown",
+            "attributes": {
+                "Confidence": "High",
+                "Types": [
+                    "Unknown"
+                ],
+                "icon": "mdi:help-circle",
+                "friendly_name": "123 Activity"
+            },
+            "last_changed": "2023-09-27T15:03:57.345953+00:00",
+            "last_updated": "2023-09-27T15:03:57.345953+00:00",
+            "context": {
+                "id": "01HBBJP351SAE4HRV43RXC204J",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_floors_ascended",
+            "state": "22",
+            "attributes": {
+                "unit_of_measurement": "floors",
+                "icon": "mdi:stairs-up",
+                "friendly_name": "123 Floors Ascended"
+            },
+            "last_changed": "2023-09-28T08:36:27.983142+00:00",
+            "last_updated": "2023-09-28T08:36:27.983142+00:00",
+            "context": {
+                "id": "01HBDEX9PF5D75G13BWEGM639A",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_steps",
+            "state": "6189",
+            "attributes": {
+                "unit_of_measurement": "steps",
+                "icon": "mdi:walk",
+                "friendly_name": "123 Steps"
+            },
+            "last_changed": "2023-09-28T08:36:27.984971+00:00",
+            "last_updated": "2023-09-28T08:36:27.984971+00:00",
+            "context": {
+                "id": "01HBDEX9PGNMWAS1K0WZEWB6GM",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_average_active_pace",
+            "state": "0",
+            "attributes": {
+                "unit_of_measurement": "m/s",
+                "icon": "mdi:speedometer",
+                "friendly_name": "123 Average Active Pace"
+            },
+            "last_changed": "2023-09-28T08:36:27.985818+00:00",
+            "last_updated": "2023-09-28T08:36:27.985818+00:00",
+            "context": {
+                "id": "01HBDEX9PHG7X3PYQB1QPDTHSD",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_floors_descended",
+            "state": "21",
+            "attributes": {
+                "unit_of_measurement": "floors",
+                "icon": "mdi:stairs-down",
+                "friendly_name": "123 Floors Descended"
+            },
+            "last_changed": "2023-09-28T08:36:27.984054+00:00",
+            "last_updated": "2023-09-28T08:36:27.984054+00:00",
+            "context": {
+                "id": "01HBDEX9PG15QWNHN90GTY1XAZ",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.123_distance",
+            "state": "4394",
+            "attributes": {
+                "unit_of_measurement": "m",
+                "icon": "mdi:hiking",
+                "friendly_name": "123 Distance"
+            },
+            "last_changed": "2023-09-28T08:36:27.981880+00:00",
+            "last_updated": "2023-09-28T08:36:27.981880+00:00",
+            "context": {
+                "id": "01HBDEX9PDAJCF18231RM92T6H",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "binary_sensor.123_focus",
+            "state": "on",
+            "attributes": {
+                "icon": "mdi:moon-waning-crescent",
+                "friendly_name": "123 Focus"
+            },
+            "last_changed": "2023-09-27T16:01:31.745825+00:00",
+            "last_updated": "2023-09-27T16:01:31.745825+00:00",
+            "context": {
+                "id": "01HBBNZGK1VK96G8W60YTP3DPK",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "device_tracker.123",
+            "state": "臥室",
+            "attributes": {
+                "source_type": "gps",
+                "battery_level": 100,
+                "latitude": 24.570205688476562,
+                "longitude": 120.8111746482241,
+                "gps_accuracy": 35,
+                "altitude": 51.90054893493652,
+                "vertical_accuracy": 6.396051406860352,
+                "friendly_name": "123"
+            },
+            "last_changed": "2023-09-26T17:30:44.221400+00:00",
+            "last_updated": "2023-09-26T17:30:44.221400+00:00",
+            "context": {
+                "id": "01HB98P4KXV0A5SH5NNQ06F351",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.in2015_battery_level",
+            "state": "41",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "%",
+                "device_class": "battery",
+                "icon": "mdi:battery-40",
+                "friendly_name": "IN2015 Battery level"
+            },
+            "last_changed": "2023-09-26T03:06:06.503782+00:00",
+            "last_updated": "2023-09-26T03:06:06.503782+00:00",
+            "context": {
+                "id": "01HB7Q6YS7BE8X417RWYFGHVRK",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.in2015_battery_state",
+            "state": "not_charging",
+            "attributes": {
+                "icon": "mdi:battery",
+                "friendly_name": "IN2015 Battery state"
+            },
+            "last_changed": "2023-09-26T03:06:06.505343+00:00",
+            "last_updated": "2023-09-26T03:06:06.505343+00:00",
+            "context": {
+                "id": "01HB7Q6YS91YWYRRWBDBMX64H8",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.in2015_charger_type",
+            "state": "none",
+            "attributes": {
+                "icon": "mdi:battery",
+                "friendly_name": "IN2015 Charger type"
+            },
+            "last_changed": "2023-09-26T03:06:06.506823+00:00",
+            "last_updated": "2023-09-26T03:06:06.506823+00:00",
+            "context": {
+                "id": "01HB7Q6YSAZCB31HG1M853T9KF",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "device_tracker.in2015",
+            "state": "home",
+            "attributes": {
+                "source_type": "gps",
+                "latitude": 24.5702722,
+                "longitude": 120.8111713,
+                "gps_accuracy": 15,
+                "altitude": 72,
+                "course": 0,
+                "speed": 0,
+                "vertical_accuracy": 1,
+                "friendly_name": "IN2015"
+            },
+            "last_changed": "2023-09-26T03:06:06.514451+00:00",
+            "last_updated": "2023-09-26T03:06:06.514451+00:00",
+            "context": {
+                "id": "01HB7Q6YSJ06MEQ8VV7NGCH9RA",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.in2015_battery_level_2",
+            "state": "76",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "%",
+                "device_class": "battery",
+                "icon": "mdi:battery-charging-70",
+                "friendly_name": "IN2015 Battery level"
+            },
+            "last_changed": "2023-09-29T09:23:58.216886+00:00",
+            "last_updated": "2023-09-29T09:23:58.216886+00:00",
+            "context": {
+                "id": "01HBG41048V62FBKDHPH8JEETS",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.in2015_battery_state_2",
+            "state": "charging",
+            "attributes": {
+                "icon": "mdi:battery-plus",
+                "friendly_name": "IN2015 Battery state"
+            },
+            "last_changed": "2023-09-29T08:42:07.499456+00:00",
+            "last_updated": "2023-09-29T08:42:07.499456+00:00",
+            "context": {
+                "id": "01HBG1MC8BH66GTEVXE3TM9NB2",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.in2015_charger_type_2",
+            "state": "usb",
+            "attributes": {
+                "icon": "mdi:usb-port",
+                "friendly_name": "IN2015 Charger type"
+            },
+            "last_changed": "2023-09-29T08:42:07.500146+00:00",
+            "last_updated": "2023-09-29T08:42:07.500146+00:00",
+            "context": {
+                "id": "01HBG1MC8CRYVA6Q0MQYE9ZAHD",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "device_tracker.in2015_2",
+            "state": "not_home",
+            "attributes": {
+                "source_type": "gps",
+                "latitude": 24.5377258,
+                "longitude": 120.7886761,
+                "gps_accuracy": 10,
+                "altitude": 235,
+                "course": 338,
+                "speed": 0,
+                "vertical_accuracy": 14,
+                "friendly_name": "IN2015"
+            },
+            "last_changed": "2023-09-28T05:00:41.162766+00:00",
+            "last_updated": "2023-09-28T05:00:41.162766+00:00",
+            "context": {
+                "id": "01HBD2J6AAGHGHFFRTD5EAXQ9E",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "media_player.wo_shi_2",
+            "state": "off",
+            "attributes": {
+                "device_class": "speaker",
+                "friendly_name": "臥室",
+                "supported_features": 152461
+            },
+            "last_changed": "2023-09-29T03:00:29.094354+00:00",
+            "last_updated": "2023-09-29T03:00:29.094354+00:00",
+            "context": {
+                "id": "01HBFE2T96AN4SCGY3G6SD5E5W",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.kong_qi_jing_hua_qi_buzzer",
+            "state": "off",
+            "attributes": {
+                "icon": "mdi:volume-high",
+                "friendly_name": "空氣淨化器 Buzzer"
+            },
+            "last_changed": "2023-09-27T00:59:45.526622+00:00",
+            "last_updated": "2023-09-27T00:59:45.526622+00:00",
+            "context": {
+                "id": "01HBA2CAFP4X90SXGFREJEGGHE",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.kong_qi_jing_hua_qi_child_lock",
+            "state": "off",
+            "attributes": {
+                "icon": "mdi:lock",
+                "friendly_name": "空氣淨化器 Child lock"
+            },
+            "last_changed": "2023-09-27T00:59:45.527101+00:00",
+            "last_updated": "2023-09-27T00:59:45.527101+00:00",
+            "context": {
+                "id": "01HBA2CAFQVW756KB8PKRAQEXZ",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.kong_qi_jing_hua_qi_led",
+            "state": "off",
+            "attributes": {
+                "icon": "mdi:led-outline",
+                "friendly_name": "空氣淨化器 LED"
+            },
+            "last_changed": "2023-09-27T00:59:45.527570+00:00",
+            "last_updated": "2023-09-27T00:59:45.527570+00:00",
+            "context": {
+                "id": "01HBA2CAFQ8YVFM0VVQNY4W38P",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.kong_qi_jing_hua_qi_learn_mode",
+            "state": "off",
+            "attributes": {
+                "icon": "mdi:school-outline",
+                "friendly_name": "空氣淨化器 Learn mode"
+            },
+            "last_changed": "2023-09-27T00:59:45.528129+00:00",
+            "last_updated": "2023-09-27T00:59:45.528129+00:00",
+            "context": {
+                "id": "01HBA2CAFRDQT8S96ZV94SMVG8",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.dian_feng_shan_socket_1",
+            "state": "off",
+            "attributes": {
+                "device_class": "outlet",
+                "friendly_name": "電風扇"
+            },
+            "last_changed": "2023-09-26T21:06:57.651761+00:00",
+            "last_updated": "2023-09-26T21:06:57.651761+00:00",
+            "context": {
+                "id": "01HB9N21ZKDSNXA55VNT9PS9FA",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "scene.guan_ri_guang_deng",
+            "state": "2023-09-13T14:34:42.074407+00:00",
+            "attributes": {
+                "friendly_name": "關日光燈"
+            },
+            "last_changed": "2023-09-26T03:06:08.247078+00:00",
+            "last_updated": "2023-09-26T03:06:08.247078+00:00",
+            "context": {
+                "id": "01HB7Q70FQ14Q810BKEY28R6J6",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "scene.kai_ri_guang_deng",
+            "state": "2023-09-17T14:45:44.445168+00:00",
+            "attributes": {
+                "friendly_name": "開日光燈"
+            },
+            "last_changed": "2023-09-26T03:06:08.250177+00:00",
+            "last_updated": "2023-09-26T03:06:08.250177+00:00",
+            "context": {
+                "id": "01HB7Q70FTYJKG3YDK23AR4E8Z",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "scene.guan_leng_qi",
+            "state": "2023-09-05T13:13:07.813804+00:00",
+            "attributes": {
+                "friendly_name": "關冷氣"
+            },
+            "last_changed": "2023-09-26T03:06:08.253086+00:00",
+            "last_updated": "2023-09-26T03:06:08.253086+00:00",
+            "context": {
+                "id": "01HB7Q70FX5RC61F1712F4FZE0",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "scene.kai_leng_qi",
+            "state": "2023-09-28T00:52:00.191028+00:00",
+            "attributes": {
+                "friendly_name": "開冷氣"
+            },
+            "last_changed": "2023-09-28T00:52:00.191333+00:00",
+            "last_updated": "2023-09-28T00:52:00.191333+00:00",
+            "context": {
+                "id": "01HBCMAV1WEQ53VDKZK70NH4TG",
+                "parent_id": null,
+                "user_id": "abdd7fe7a32a44258f3a06e29a0ae095"
+            }
+        },
+        {
+            "entity_id": "button.midesklamp1s_4e36_identify",
+            "state": "unknown",
+            "attributes": {
+                "friendly_name": "MiDeskLamp1S-4E36 Identify"
+            },
+            "last_changed": "2023-09-26T03:06:08.364356+00:00",
+            "last_updated": "2023-09-26T03:06:08.364356+00:00",
+            "context": {
+                "id": "01HB7Q70KCQG2K34C64JEMGCVT",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "light.midesklamp1s_4e36",
+            "state": "off",
+            "attributes": {
+                "min_color_temp_kelvin": 2500,
+                "max_color_temp_kelvin": 20000,
+                "min_mireds": 50,
+                "max_mireds": 400,
+                "supported_color_modes": [
+                    "color_temp"
+                ],
+                "friendly_name": "desk lamp",
+                "supported_features": 0
+            },
+            "last_changed": "2023-09-28T16:00:48.246121+00:00",
+            "last_updated": "2023-09-28T16:00:48.246121+00:00",
+            "context": {
+                "id": "01HBE8AX3PS6W1ANR2TG5FR2T2",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.gpu_server",
+            "state": "off",
+            "attributes": {
+                "friendly_name": "Linux PC"
+            },
+            "last_changed": "2023-09-26T03:06:08.665242+00:00",
+            "last_updated": "2023-09-26T03:06:08.665242+00:00",
+            "context": {
+                "id": "01HB7Q70WS7ZVY21XQ9CG22C2R",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "binary_sensor.espresense_wo_shi",
+            "state": "on",
+            "attributes": {
+                "ip": "192.168.1.127",
+                "uptime": 420212,
+                "firm": "esp32",
+                "rssi": -48,
+                "ver": "v3.2.4",
+                "adverts": 4825938,
+                "seen": 4501770,
+                "reported": 294038,
+                "freeHeap": 100784,
+                "maxAllocHeap": 77812,
+                "memFrag": 22.79330052,
+                "scanHighWater": 900,
+                "device_class": "connectivity",
+                "friendly_name": "ESPresense 臥室"
+            },
+            "last_changed": "2023-09-26T03:06:10.190104+00:00",
+            "last_updated": "2023-09-29T09:26:55.375468+00:00",
+            "context": {
+                "id": "01HBG46D4FJJ6H857K5CR7CAQK",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.espresense_wo_shi_uptime",
+            "state": "420212",
+            "attributes": {
+                "unit_of_measurement": "s",
+                "friendly_name": "ESPresense 臥室 Uptime"
+            },
+            "last_changed": "2023-09-29T09:26:55.375045+00:00",
+            "last_updated": "2023-09-29T09:26:55.375045+00:00",
+            "context": {
+                "id": "01HBG46D4F6EN0P0050FB68BCP",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.espresense_wo_shi_free_mem",
+            "state": "100784",
+            "attributes": {
+                "unit_of_measurement": "bytes",
+                "friendly_name": "ESPresense 臥室 Free Mem"
+            },
+            "last_changed": "2023-09-29T09:23:40.341751+00:00",
+            "last_updated": "2023-09-29T09:23:40.341751+00:00",
+            "context": {
+                "id": "01HBG40ENN3MDKN1RSN5GRVYFB",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "button.espresense_wo_shi_restart",
+            "state": "unknown",
+            "attributes": {
+                "friendly_name": "ESPresense 臥室 Restart"
+            },
+            "last_changed": "2023-09-26T03:06:10.187646+00:00",
+            "last_updated": "2023-09-26T03:06:10.187646+00:00",
+            "context": {
+                "id": "01HB7Q72CB36HC6YA2TPYYMMK4",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "number.espresense_wo_shi_max_distance",
+            "state": "16.0",
+            "attributes": {
+                "min": 0.0,
+                "max": 100.0,
+                "step": 0.1,
+                "mode": "auto",
+                "friendly_name": "ESPresense 臥室 Max Distance"
+            },
+            "last_changed": "2023-09-26T03:06:10.220058+00:00",
+            "last_updated": "2023-09-26T03:06:10.220058+00:00",
+            "context": {
+                "id": "01HB7Q72DCD6SPEAB73G0FMQ1T",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "number.espresense_wo_shi_absorption",
+            "state": "3.5",
+            "attributes": {
+                "min": 0.0,
+                "max": 100.0,
+                "step": 0.1,
+                "mode": "auto",
+                "friendly_name": "ESPresense 臥室 Absorption"
+            },
+            "last_changed": "2023-09-26T03:06:10.224459+00:00",
+            "last_updated": "2023-09-26T03:06:10.224459+00:00",
+            "context": {
+                "id": "01HB7Q72DG147VMA75FXMJTZZ9",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.espresense_wo_shi_auto_update",
+            "state": "off",
+            "attributes": {
+                "friendly_name": "ESPresense 臥室 Auto Update"
+            },
+            "last_changed": "2023-09-26T03:06:10.225572+00:00",
+            "last_updated": "2023-09-26T03:06:10.225572+00:00",
+            "context": {
+                "id": "01HB7Q72DHPY08J65T9BVJZ36A",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.espresense_wo_shi_arduino_ota",
+            "state": "off",
+            "attributes": {
+                "friendly_name": "ESPresense 臥室 Arduino OTA"
+            },
+            "last_changed": "2023-09-26T03:06:10.238528+00:00",
+            "last_updated": "2023-09-26T03:06:10.238528+00:00",
+            "context": {
+                "id": "01HB7Q72DY8V3TMDZHN29D3X5D",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.espresense_wo_shi_prerelease",
+            "state": "off",
+            "attributes": {
+                "friendly_name": "ESPresense 臥室 Prerelease"
+            },
+            "last_changed": "2023-09-26T03:06:10.290692+00:00",
+            "last_updated": "2023-09-26T03:06:10.290692+00:00",
+            "context": {
+                "id": "01HB7Q72FJD8SC6Y7DXYJDDG65",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "button.espresense_wo_shi_update",
+            "state": "unknown",
+            "attributes": {
+                "friendly_name": "ESPresense 臥室 Update"
+            },
+            "last_changed": "2023-09-26T03:06:10.186116+00:00",
+            "last_updated": "2023-09-26T03:06:10.186116+00:00",
+            "context": {
+                "id": "01HB7Q72CAG4T9YD4SA0BDPMTT",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "button.espresense_wo_shi_enroll",
+            "state": "unknown",
+            "attributes": {
+                "friendly_name": "ESPresense 臥室 Enroll"
+            },
+            "last_changed": "2023-09-26T03:06:10.185632+00:00",
+            "last_updated": "2023-09-26T03:06:10.185632+00:00",
+            "context": {
+                "id": "01HB7Q72C9ACZEJKC98QCRE061",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "binary_sensor.remote_ui",
+            "state": "unavailable",
+            "attributes": {
+                "restored": true,
+                "device_class": "connectivity",
+                "friendly_name": "Remote UI",
+                "supported_features": 0
+            },
+            "last_changed": "2023-09-26T03:06:08.690171+00:00",
+            "last_updated": "2023-09-26T03:06:08.690171+00:00",
+            "context": {
+                "id": "01HB7Q70XJQCQMZKQ7AAGC0Y6C",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "button.wled_restart",
+            "state": "unavailable",
+            "attributes": {
+                "device_class": "restart",
+                "friendly_name": "WLED Restart"
+            },
+            "last_changed": "2023-09-27T11:16:47.094396+00:00",
+            "last_updated": "2023-09-27T11:16:47.094396+00:00",
+            "context": {
+                "id": "01HBB5P4BPRE4J0YFEE2BXDP2N",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "light.wled",
+            "state": "unavailable",
+            "attributes": {
+                "effect_list": [
+                    "Akemi",
+                    "Android",
+                    "Aurora",
+                    "Black Hole",
+                    "Blends",
+                    "Blink",
+                    "Blink Rainbow",
+                    "Blobs",
+                    "Blurz",
+                    "Bouncing Balls",
+                    "Bpm",
+                    "Breathe",
+                    "Candle",
+                    "Candle Multi",
+                    "Chase",
+                    "Chase 2",
+                    "Chase 3",
+                    "Chase Flash",
+                    "Chase Flash Rnd",
+                    "Chase Rainbow",
+                    "Chase Random",
+                    "Chunchun",
+                    "Colored Bursts",
+                    "Colorful",
+                    "Colorloop",
+                    "Colortwinkles",
+                    "Colorwaves",
+                    "Crazy Bees",
+                    "DJ Light",
+                    "DNA",
+                    "DNA Spiral",
+                    "Dancing Shadows",
+                    "Dissolve",
+                    "Dissolve Rnd",
+                    "Distortion Waves",
+                    "Drift",
+                    "Drift Rose",
+                    "Drip",
+                    "Dynamic",
+                    "Dynamic Smooth",
+                    "Fade",
+                    "Fairy",
+                    "Fairytwinkle",
+                    "Fill Noise",
+                    "Fire 2012",
+                    "Fire Flicker",
+                    "Firenoise",
+                    "Fireworks",
+                    "Fireworks 1D",
+                    "Fireworks Starburst",
+                    "Flow",
+                    "Flow Stripe",
+                    "Freqmap",
+                    "Freqmatrix",
+                    "Freqpixels",
+                    "Freqwave",
+                    "Frizzles",
+                    "Funky Plank",
+                    "GEQ",
+                    "Game Of Life",
+                    "Ghost Rider",
+                    "Glitter",
+                    "Gradient",
+                    "Gravcenter",
+                    "Gravcentric",
+                    "Gravfreq",
+                    "Gravimeter",
+                    "Halloween Eyes",
+                    "Heartbeat",
+                    "Hiphotic",
+                    "ICU",
+                    "Juggle",
+                    "Juggles",
+                    "Julia",
+                    "Lake",
+                    "Lighthouse",
+                    "Lightning",
+                    "Lissajous",
+                    "Loading",
+                    "Matripix",
+                    "Matrix",
+                    "Metaballs",
+                    "Meteor",
+                    "Meteor Smooth",
+                    "Midnoise",
+                    "Multi Comet",
+                    "Noise 1",
+                    "Noise 2",
+                    "Noise 3",
+                    "Noise 4",
+                    "Noise Pal",
+                    "Noise2D",
+                    "Noisefire",
+                    "Noisemeter",
+                    "Noisemove",
+                    "Octopus",
+                    "Oscillate",
+                    "Pacifica",
+                    "Palette",
+                    "Percent",
+                    "Perlin Move",
+                    "Phased",
+                    "Phased Noise",
+                    "Pixels",
+                    "Pixelwave",
+                    "Plasma",
+                    "Plasma Ball",
+                    "Plasmoid",
+                    "Polar Lights",
+                    "Popcorn",
+                    "Pride 2015",
+                    "Puddlepeak",
+                    "Puddles",
+                    "Pulser",
+                    "RSVD",
+                    "RSVD",
+                    "RSVD",
+                    "RSVD",
+                    "RSVD",
+                    "RSVD",
+                    "RSVD",
+                    "RSVD",
+                    "Railway",
+                    "Rain",
+                    "Rainbow",
+                    "Rainbow Runner",
+                    "Random Colors",
+                    "Ripple",
+                    "Ripple Peak",
+                    "Ripple Rainbow",
+                    "Rocktaves",
+                    "Rolling Balls",
+                    "Running",
+                    "Running Dual",
+                    "Saw",
+                    "Scan",
+                    "Scan Dual",
+                    "Scanner",
+                    "Scanner Dual",
+                    "Scrolling Text",
+                    "Sindots",
+                    "Sine",
+                    "Sinelon",
+                    "Sinelon Dual",
+                    "Sinelon Rainbow",
+                    "Soap",
+                    "Solid",
+                    "Solid Glitter",
+                    "Solid Pattern",
+                    "Solid Pattern Tri",
+                    "Spaceships",
+                    "Sparkle",
+                    "Sparkle Dark",
+                    "Sparkle+",
+                    "Spots",
+                    "Spots Fade",
+                    "Squared Swirl",
+                    "Stream",
+                    "Stream 2",
+                    "Strobe",
+                    "Strobe Mega",
+                    "Strobe Rainbow",
+                    "Sun Radiation",
+                    "Sunrise",
+                    "Sweep",
+                    "Sweep Random",
+                    "Swirl",
+                    "TV Simulator",
+                    "Tartan",
+                    "Tetrix",
+                    "Theater",
+                    "Theater Rainbow",
+                    "Traffic Light",
+                    "Tri Fade",
+                    "Tri Wipe",
+                    "Twinkle",
+                    "Twinklecat",
+                    "Twinklefox",
+                    "Twinkleup",
+                    "Two Dots",
+                    "Washing Machine",
+                    "Waterfall",
+                    "Waverly",
+                    "Wavesins",
+                    "Waving Cell",
+                    "Wipe",
+                    "Wipe Random"
+                ],
+                "supported_color_modes": [
+                    "rgb"
+                ],
+                "icon": "mdi:led-strip-variant",
+                "friendly_name": "WLED",
+                "supported_features": 36
+            },
+            "last_changed": "2023-09-27T11:16:47.095935+00:00",
+            "last_updated": "2023-09-27T11:16:47.095935+00:00",
+            "context": {
+                "id": "01HBB5P4BQV3YAG37WBKSX5QR8",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "number.wled_speed",
+            "state": "unavailable",
+            "attributes": {
+                "min": 0,
+                "max": 255,
+                "step": 1,
+                "mode": "auto",
+                "icon": "mdi:speedometer",
+                "friendly_name": "WLED Speed"
+            },
+            "last_changed": "2023-09-27T11:16:47.097514+00:00",
+            "last_updated": "2023-09-27T11:16:47.097514+00:00",
+            "context": {
+                "id": "01HBB5P4BSQP5NEJWQQ4EKSTXX",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "number.wled_intensity",
+            "state": "unavailable",
+            "attributes": {
+                "min": 0,
+                "max": 255,
+                "step": 1,
+                "mode": "auto",
+                "friendly_name": "WLED Intensity"
+            },
+            "last_changed": "2023-09-27T11:16:47.098243+00:00",
+            "last_updated": "2023-09-27T11:16:47.098243+00:00",
+            "context": {
+                "id": "01HBB5P4BTDFP9XGKQYTYJZFY4",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "select.wled_live_override",
+            "state": "unavailable",
+            "attributes": {
+                "options": [
+                    "0",
+                    "1",
+                    "2"
+                ],
+                "icon": "mdi:theater",
+                "friendly_name": "WLED Live override"
+            },
+            "last_changed": "2023-09-27T11:16:47.098942+00:00",
+            "last_updated": "2023-09-27T11:16:47.098942+00:00",
+            "context": {
+                "id": "01HBB5P4BT1G8K4RB07R7487VM",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "select.wled_playlist",
+            "state": "unavailable",
+            "attributes": {
+                "options": [],
+                "icon": "mdi:play-speed",
+                "friendly_name": "WLED Playlist"
+            },
+            "last_changed": "2023-09-26T03:06:08.692640+00:00",
+            "last_updated": "2023-09-26T15:31:10.823382+00:00",
+            "context": {
+                "id": "01HB91V7B7DAKFPFADFXTETVZ6",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "select.wled_preset",
+            "state": "unavailable",
+            "attributes": {
+                "options": [],
+                "icon": "mdi:playlist-play",
+                "friendly_name": "WLED Preset"
+            },
+            "last_changed": "2023-09-26T03:06:08.693145+00:00",
+            "last_updated": "2023-09-26T15:31:10.825196+00:00",
+            "context": {
+                "id": "01HB91V7B9XBAP1WWK7M11NEZY",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "select.wled_color_palette",
+            "state": "unavailable",
+            "attributes": {
+                "options": [
+                    "* Color 1",
+                    "* Color Gradient",
+                    "* Colors 1&2",
+                    "* Colors Only",
+                    "* Random Cycle",
+                    "Analogous",
+                    "April Night",
+                    "Aqua Flash",
+                    "Atlantica",
+                    "Aurora",
+                    "Aurora 2",
+                    "Autumn",
+                    "Beach",
+                    "Beech",
+                    "Blink Red",
+                    "Breeze",
+                    "C9",
+                    "C9 2",
+                    "C9 New",
+                    "Candy",
+                    "Candy2",
+                    "Cloud",
+                    "Cyane",
+                    "Default",
+                    "Departure",
+                    "Drywet",
+                    "Fairy Reaf",
+                    "Fire",
+                    "Forest",
+                    "Grintage",
+                    "Hult",
+                    "Hult 64",
+                    "Icefire",
+                    "Jul",
+                    "Landscape",
+                    "Lava",
+                    "Light Pink",
+                    "Lite Light",
+                    "Magenta",
+                    "Magred",
+                    "Ocean",
+                    "Orange & Teal",
+                    "Orangery",
+                    "Party",
+                    "Pastel",
+                    "Pink Candy",
+                    "Rainbow",
+                    "Rainbow Bands",
+                    "Red & Blue",
+                    "Red Flash",
+                    "Red Reaf",
+                    "Red Shift",
+                    "Red Tide",
+                    "Retro Clown",
+                    "Rewhi",
+                    "Rivendell",
+                    "Sakura",
+                    "Semi Blue",
+                    "Sherbet",
+                    "Splash",
+                    "Sunset",
+                    "Sunset 2",
+                    "Temperature",
+                    "Tertiary",
+                    "Tiamat",
+                    "Toxy Reaf",
+                    "Vintage",
+                    "Yelblu",
+                    "Yelblu Hot",
+                    "Yellowout",
+                    "Yelmag"
+                ],
+                "icon": "mdi:palette-outline",
+                "friendly_name": "WLED Color palette"
+            },
+            "last_changed": "2023-09-27T11:16:47.103091+00:00",
+            "last_updated": "2023-09-27T11:16:47.103091+00:00",
+            "context": {
+                "id": "01HBB5P4BZHWVC119KYKK0243K",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.wled_estimated_current",
+            "state": "unavailable",
+            "attributes": {
+                "state_class": "measurement",
+                "unit_of_measurement": "mA",
+                "device_class": "current",
+                "friendly_name": "WLED Estimated current"
+            },
+            "last_changed": "2023-09-27T11:16:47.103941+00:00",
+            "last_updated": "2023-09-27T11:16:47.103941+00:00",
+            "context": {
+                "id": "01HBB5P4BZK294MYFD7NEVNN81",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.wled_led_count",
+            "state": "unavailable",
+            "attributes": {
+                "friendly_name": "WLED LED count"
+            },
+            "last_changed": "2023-09-27T11:16:47.104541+00:00",
+            "last_updated": "2023-09-27T11:16:47.104541+00:00",
+            "context": {
+                "id": "01HBB5P4C0PFT0SHV83G1XMAHM",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.wled_max_current",
+            "state": "unavailable",
+            "attributes": {
+                "unit_of_measurement": "mA",
+                "device_class": "current",
+                "friendly_name": "WLED Max current"
+            },
+            "last_changed": "2023-09-27T11:16:47.104916+00:00",
+            "last_updated": "2023-09-27T11:16:47.104916+00:00",
+            "context": {
+                "id": "01HBB5P4C0CDEVT5MZB9575EM1",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "sensor.wled_ip",
+            "state": "unavailable",
+            "attributes": {
+                "icon": "mdi:ip-network",
+                "friendly_name": "WLED IP"
+            },
+            "last_changed": "2023-09-27T11:16:47.105331+00:00",
+            "last_updated": "2023-09-27T11:16:47.105331+00:00",
+            "context": {
+                "id": "01HBB5P4C13N1C5723YZ3MVR60",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.wled_nightlight",
+            "state": "unavailable",
+            "attributes": {
+                "icon": "mdi:weather-night",
+                "friendly_name": "WLED Nightlight"
+            },
+            "last_changed": "2023-09-27T11:16:47.105706+00:00",
+            "last_updated": "2023-09-27T11:16:47.105706+00:00",
+            "context": {
+                "id": "01HBB5P4C14W5MY2T7WYJQC8AY",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.wled_sync_send",
+            "state": "unavailable",
+            "attributes": {
+                "icon": "mdi:upload-network-outline",
+                "friendly_name": "WLED Sync send"
+            },
+            "last_changed": "2023-09-27T11:16:47.106200+00:00",
+            "last_updated": "2023-09-27T11:16:47.106200+00:00",
+            "context": {
+                "id": "01HBB5P4C231DYP80J7DYA898Z",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.wled_sync_receive",
+            "state": "unavailable",
+            "attributes": {
+                "icon": "mdi:download-network-outline",
+                "friendly_name": "WLED Sync receive"
+            },
+            "last_changed": "2023-09-27T11:16:47.106615+00:00",
+            "last_updated": "2023-09-27T11:16:47.106615+00:00",
+            "context": {
+                "id": "01HBB5P4C22XYFP71F6BJY4JMM",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "switch.wled_reverse",
+            "state": "unavailable",
+            "attributes": {
+                "icon": "mdi:swap-horizontal-bold",
+                "friendly_name": "WLED Reverse"
+            },
+            "last_changed": "2023-09-27T11:16:47.107083+00:00",
+            "last_updated": "2023-09-27T11:16:47.107083+00:00",
+            "context": {
+                "id": "01HBB5P4C38J7VF6MZYHBKTZYK",
+                "parent_id": null,
+                "user_id": null
+            }
+        },
+        {
+            "entity_id": "update.wled_firmware",
+            "state": "unavailable",
+            "attributes": {
+                "device_class": "firmware",
+                "entity_picture": "https://brands.home-assistant.io/_/wled/icon.png",
+                "friendly_name": "WLED Firmware",
+                "supported_features": 3
+            },
+            "last_changed": "2023-09-27T11:16:47.107487+00:00",
+            "last_updated": "2023-09-27T11:16:47.107487+00:00",
+            "context": {
+                "id": "01HBB5P4C3XQJJ1BZ310193C2E",
+                "parent_id": null,
+                "user_id": null
+            }
+        }
+    ]
+}
