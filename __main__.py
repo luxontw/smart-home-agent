@@ -9,20 +9,20 @@ def main():
     """
     Robot main logic
     """
-    if len(sys.argv) < 2:
-        print('usage: hideandseek <robot_ip_address>')
-        sys.exit(1)
+    # if len(sys.argv) < 2:
+    #     print('usage: hideandseek <robot_ip_address>')
+    #     sys.exit(1)
 
     # Connect to the robot
-    zenbo = comm.connect_robot(sys.argv[1])
+    zenbo = comm.connect_robot("192.168.1.104")
 
     try:
         # Initialize
-        # listen_callback_handler = partial(dialog.handle_speak, zenbo)
-        # zenbo.robot.register_listen_callback(1207, listen_callback_handler)
+        listen_callback_handler = partial(dialog.handle_speak, zenbo)
+        zenbo.robot.register_listen_callback(1207, listen_callback_handler)
 
         # Ask user if he wants to play
-        # dialog.ask_user_for_play(zenbo)
+        dialog.ask_user_for_play(zenbo)
 
         # Wait for response
         # TBD
