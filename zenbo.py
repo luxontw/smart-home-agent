@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import json
 import pyzenbo
 import time
@@ -14,7 +14,7 @@ def main():
     #     sys.exit(1)
 
     # Connect to the robot
-    zenbo = comm.connect_robot("192.168.1.104")
+    zenbo = comm.connect_robot(os.getenv("ZENBO_IP_ADDRESS"))
 
     try:
         # Initialize
