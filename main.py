@@ -12,7 +12,7 @@ from langchain.prompts import ChatPromptTemplate
 from wled import *
 
 logging.basicConfig(level=logging.INFO)
-host = os.getenv("ZENBO_IP")
+host = os.getenv("ZENBO_IP_ADDRESS")
 sdk = pyzenbo.connect(host)
 domain_id = "1303"
 domain_uuid = "E7AABB554ACB414C9AB9BF45E7FA8AD9"
