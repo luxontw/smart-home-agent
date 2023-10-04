@@ -1,6 +1,5 @@
 import sys, os
 from dotenv import load_dotenv
-load_dotenv()
 import json
 import pyzenbo
 import time
@@ -16,6 +15,7 @@ def main():
     #     sys.exit(1)
 
     # Connect to the robot
+    load_dotenv()
     print("os.getenv(ZENBO_IP_ADDRESS): ", os.getenv("ZENBO_IP_ADDRESS"))
     zenbo = comm.connect_robot(os.getenv("ZENBO_IP_ADDRESS"))
 

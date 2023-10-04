@@ -1,11 +1,10 @@
-"""Some simple tests/example for the Home Assistant client."""
-
 import argparse
 import asyncio
 import logging
 import sys, os
-from contextlib import suppress
+from dotenv import load_dotenv
 
+from contextlib import suppress
 from aiohttp import ClientSession
 
 from hassclient import HomeAssistantClient
@@ -14,20 +13,19 @@ from hassclient.models import Event
 LOGGER = logging.getLogger()
 
 
-def get_arguments() -> argparse.Namespace:
-    """Get parsed passed in arguments."""
-    parser = argparse.ArgumentParser(description="Home Assistant simple client for Python")
-    parser.add_argument("--debug", action="store_true", help="Log with debug level")
-    parser.add_argument("url", type=str, help="URL of server, ie http://homeassistant:8123")
-    parser.add_argument("token", type=str, help="Long Lived Token")
-    # arguments = parser.parse_args()
-    # return arguments
+def get_env() -> dict:
+    load_dotenv()
+    return {
+        "endpoint": os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT"),
+        "token": os.getenv("HOMEASSISTANT_WEBSOCKET_TOKEN"),
+        "debug": os.getenv("HOMEASSISTANT_LOGGING_DEBUG"),
+    }
 
 
-async def start_cli() -> None:
+async def start() -> None:
     """Run main."""
-    args = get_arguments()
-    level = logging.DEBUG  # if args.debug else logging.INFO
+    args = get_env()
+    level = logging.DEBUG if args["debug"] else logging.INFO
     logging.basicConfig(level=level)
 
     async with ClientSession() as session:
@@ -36,10 +34,16 @@ async def start_cli() -> None:
 
 async def connect(args: argparse.Namespace, session: ClientSession) -> None:
     """Connect to the server."""
-    websocket_url =  os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT")
-    async with HomeAssistantClient(websocket_url, os.getenv("HOMEASSISTANT_WEBSOCKET_TOKEN"),  session) as client:
+    websocket_url = args["endpoint"]
+    async with HomeAssistantClient(websocket_url, args["token"], session) as client:
         await client.subscribe_events(log_events)
-        await asyncio.sleep(360)
+        await client.call_service(
+            "light",
+            "turn_on",
+            {"brightness": "100", "rgb_color": ["255", "0", "0"], "effect": "Drip"},
+            {"entity_id": "light.wled"},
+        )
+        await asyncio.sleep(5)
 
 
 def log_events(event: Event) -> None:
@@ -51,7 +55,7 @@ def log_events(event: Event) -> None:
 def main() -> None:
     """Run main."""
     with suppress(KeyboardInterrupt):
-        asyncio.run(start_cli())
+        asyncio.run(start())
 
     sys.exit(0)
 
