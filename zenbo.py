@@ -25,7 +25,8 @@ def main():
         zenbo.robot.register_listen_callback(1207, listen_callback_handler)
 
         # Ask user if he wants to play
-        dialog.ask_user_for_play(zenbo)
+        while True:
+            dialog.wait_user(zenbo)
 
         # Wait for response
         # TBD

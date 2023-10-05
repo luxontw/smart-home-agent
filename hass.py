@@ -29,7 +29,7 @@ async def start() -> None:
     logging.basicConfig(level=level)
 
     async with ClientSession() as session:
-        await connect(args, session)
+        await control(args, session)
 
 
 async def connect(args: argparse.Namespace, session: ClientSession) -> None:
@@ -37,11 +37,17 @@ async def connect(args: argparse.Namespace, session: ClientSession) -> None:
     websocket_url = args["endpoint"]
     async with HomeAssistantClient(websocket_url, args["token"], session) as client:
         await client.subscribe_events(log_events)
+
+
+async def control(args: argparse.Namespace, session: ClientSession) -> None:
+    """Connect to the server."""
+    websocket_url = args["endpoint"]
+    async with HomeAssistantClient(websocket_url, args["token"], session) as client:
         await client.call_service(
             "light",
-            "turn_on",
-            {"brightness": "100", "rgb_color": ["255", "0", "0"], "effect": "Drip"},
-            {"entity_id": "light.wled"},
+            "turn_off",
+            None, # {"brightness": "100", "rgb_color": ["100", "100", "0"], "effect": "Bpm"},
+           {"entity_id": "light.wled"},
         )
         await asyncio.sleep(5)
 
