@@ -104,7 +104,7 @@ def execute_command(command):
             "living_room": { \
                 "lights": { \
                     "led_strip": { \
-                        "state": "turn_off" \
+                        "state": "off" \
                         "brightness": 0 \
                         "rgb_color": [0, 0, 0] \
                         "effect": "Solid" \
@@ -145,11 +145,10 @@ while Time < 5:
         print("say_hello_and_ask result:", slu)
         json_dict = json.loads(slu["user_utterance"])
         command = json_dict[0]["result"][0]
-        # wled_data = asyncio.get_event_loop().run_until_complete(states())
-        # print(",".join(wled_data))
+        wled_data = asyncio.get_event_loop().run_until_complete(states())
+        print(",".join(wled_data))
         result = execute_command(command)
         wled_settings = json.loads(result)
-        service = wled_settings["devices"]["living_room"]["lights"]["led_strip"]["state"]
         brightness = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
             "brightness"
         ]
@@ -159,7 +158,7 @@ while Time < 5:
         effect = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
             "effect"
         ]
-        asyncio.get_event_loop().run_until_complete(execute(service, brightness, rgb_color, effect))
+        asyncio.get_event_loop().run_until_complete(main(brightness, rgb_color, effect))
     else:
         not_found()
     sdk.robot.set_expression(RobotFace.HIDEFACE, timeout=5)

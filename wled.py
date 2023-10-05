@@ -1,63 +1,47 @@
+import argparse
 import asyncio
-import os
-import json
-import websockets
+import logging
+import sys, os
+from dotenv import load_dotenv
 
-index = 0
+from contextlib import suppress
+from aiohttp import ClientSession
 
+from hassclient import HomeAssistantClient
+from hassclient.models import Event
 
-def auth():
-    return json.dumps(
-        {"type": "auth", "access_token": os.getenv("HOMEASSISTANT_WEBSOCKET_TOKEN")}
-    )
-
-
-def get_states():
-    global index
-    index += 1
-    return json.dumps({"id": index, "type": "get_states"})
+LOGGER = logging.getLogger()
 
 
-def call_service(brightness, rgb_color, effect):
-    global index
-    index += 1
-    return json.dumps(
-        {
-            "id": 67,
-            "type": "call_service",
-            "domain": "light",
-            "service": "turn_on",
-            "service_data": {
-                "brightness": brightness,
-                "rgb_color": rgb_color,
-                "effect": effect,
-            },
-            "target": {"entity_id": "light.wled"},
-        }
-    )
+def get_env() -> dict:
+    load_dotenv()
+    return {
+        "endpoint": os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT"),
+        "token": os.getenv("HOMEASSISTANT_WEBSOCKET_TOKEN"),
+        "debug": os.getenv("HOMEASSISTANT_LOGGING_DEBUG"),
+    }
+
+async def execute(service, brightness, rgb_color, effect) -> None:
+    args = get_env()
+    level = logging.DEBUG if args["debug"] else logging.INFO
+    logging.basicConfig(level=level)
+    async with ClientSession() as session:
+       await control(args, session, service, brightness, rgb_color, effect)
 
 
-async def states():
-    uri = os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT")
-    async with websockets.connect(uri) as websocket:
-        response = await websocket.recv()
-        print(f"HA Info: {response}")
-        await websocket.send(auth())
-        response = await websocket.recv()
-        print(f"HA Info: {response}")
-
-        await websocket.send(get_states())
-        states = await websocket.recv()
-        states = json.loads(states)
-        return states["result"][32]["attributes"]["effect_list"]
-
-
-async def main(brightness, rgb_color, effect):
-    uri = os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT")
-    async with websockets.connect(uri) as websocket:
-        response = await websocket.recv()
-        print(f"HA Info: {response}")
-        await websocket.send(auth())
-        response = await websocket.recv()
-        print(f"HA Info: {response}")
-        await websocket.send(call_service(brightness, rgb_color, effect))
+async def control(args: argparse.Namespace, session: ClientSession, service, brightness, rgb_color, effect) -> None:
+    """Connect to the server."""
+    websocket_url = args["endpoint"]
+    async with HomeAssistantClient(websocket_url, args["token"], session) as client:
+        if service == "turn_on":
+            await client.call_service(
+                "light",
+                service,
+                {"brightness": brightness, "rgb_color": rgb_color, "effect": effect},
+                {"entity_id": "light.wled"},
+            )
+        else:
+            await client.call_service(
+                "light", service, {"entity_id": "light.wled"}
+            )
+        await asyncio.sleep(5)

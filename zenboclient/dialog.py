@@ -19,6 +19,7 @@ def handle_speak(zenbo: pyzenbo.PyZenbo, args):
 
     if event_user_utterance:
         global been_called
+        print("event_user_utterance: ", event_user_utterance)
         been_said = str(
             json.loads(event_user_utterance.get("user_utterance"))[0].get("result")[0]
         )
