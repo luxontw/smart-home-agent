@@ -6,7 +6,7 @@ import time
 from functools import partial
 from zenboclient import dialog, navigation, seeking, comm
 
-def main():
+def init():
     """
     Robot main logic
     """
@@ -26,7 +26,8 @@ def main():
 
         # Ask user if he wants to play
         while True:
-            dialog.wait_user(zenbo)
+           result = dialog.wait_user(zenbo)
+           print("result: ", result)
 
         # Wait for response
         # TBD
@@ -61,4 +62,4 @@ def main():
         sys.exit(0)
 
 if __name__ == '__main__':
-    main()
+    init()

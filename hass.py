@@ -1,10 +1,9 @@
 import argparse
 import asyncio
 import logging
-import sys, os
+import os
 from dotenv import load_dotenv
 
-from contextlib import suppress
 from aiohttp import ClientSession
 
 from hassclient import HomeAssistantClient
@@ -21,36 +20,33 @@ def get_env() -> dict:
         "debug": os.getenv("HOMEASSISTANT_LOGGING_DEBUG"),
     }
 
-
-async def start() -> None:
-    """Run main."""
-    args = get_env()
-    level = logging.DEBUG if args["debug"] else logging.INFO
+def init()->None:
+    level = logging.DEBUG if get_env()["debug"] else logging.INFO
     logging.basicConfig(level=level)
 
+
+async def execute(service, brightness, rgb_color, effect) -> None:
     async with ClientSession() as session:
-       await control(args, session)
+       await control(get_env(), session, service, brightness, rgb_color, effect)
 
 
-async def connect(args: argparse.Namespace, session: ClientSession) -> None:
+async def control(args: argparse.Namespace, session: ClientSession, service, brightness, rgb_color, effect) -> None:
     """Connect to the server."""
     websocket_url = args["endpoint"]
     async with HomeAssistantClient(websocket_url, args["token"], session) as client:
-        await client.subscribe_events(log_events)
-
-
-async def control(args: argparse.Namespace, session: ClientSession) -> None:
-    """Connect to the server."""
-    websocket_url = args["endpoint"]
-    async with HomeAssistantClient(websocket_url, args["token"], session) as client:
-        await client.call_service(
-            "light",
-            "turn_on",
-            None, # {"brightness": "100", "rgb_color": ["100", "100", "0"], "effect": "Bpm"},
-           {"entity_id": "light.wled"},
-        )
+        if service == "turn_on":
+            await client.call_service(
+                "light",
+                service,
+                {"brightness": brightness, "rgb_color": rgb_color, "effect": effect},
+                {"entity_id": "light.wled"},
+            )
+        else:
+            await client.call_service(
+                "light", service, {"entity_id": "light.wled"}
+            )
         await asyncio.sleep(5)
-
+    
 
 def log_events(event: Event) -> None:
     """Log node value changes."""
@@ -58,13 +54,4 @@ def log_events(event: Event) -> None:
     LOGGER.debug(event)
 
 
-def main() -> None:
-    """Run main."""
-    with suppress(KeyboardInterrupt):
-        asyncio.run(start())
 
-    sys.exit(0)
-
-
-if __name__ == "__main__":
-    main()

@@ -4,6 +4,9 @@ and the user.
 """
 import pyzenbo
 import json
+import llm
+import hass
+import asyncio
 from pyzenbo.modules.dialog_system import RobotFace
 
 global name, been_called
@@ -32,6 +35,21 @@ def handle_speak(zenbo: pyzenbo.PyZenbo, args):
                 pass
             else:
                 print("control: ", been_said)
+                result = llm.execute_command(been_said)
+                wled_settings = json.loads(result)
+                service = wled_settings["devices"]["living_room"]["lights"]["led_strip"]["state"]
+                brightness = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
+                    "brightness"
+                 ]
+                rgb_color = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
+                  "rgb_color"
+                ]
+                effect = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
+                    "effect"
+                ]
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                asyncio.get_event_loop().run_until_complete(hass.execute(service, brightness, rgb_color, effect))
                 been_called = False
 
 
