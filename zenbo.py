@@ -1,65 +1,50 @@
-import sys, os
-from dotenv import load_dotenv
+import sys
 import json
-import pyzenbo
-import time
+import logging
+
+import llm
 from functools import partial
 from zenboclient import dialog, navigation, seeking, comm
 
-def init():
+LOGGER = logging.getLogger()
+
+
+def init(config: dict):
     """
     Robot main logic
     """
-    # if len(sys.argv) < 2:
-    #     print('usage: hideandseek <robot_ip_address>')
-    #     sys.exit(1)
-
     # Connect to the robot
-    load_dotenv()
-    print("os.getenv(ZENBO_IP_ADDRESS): ", os.getenv("ZENBO_IP_ADDRESS"))
-    zenbo = comm.connect_robot(os.getenv("ZENBO_IP_ADDRESS"))
+    LOGGER.info("Set robot IP:  %s", config["zenbo_ip"])
+    LOGGER.info("Set robot name:  %s", config["zenbo_name"])
+    zenbo = comm.connect_robot(config["zenbo_ip"])
+    zenbo_name = config["zenbo_name"]
 
     try:
         # Initialize
+        zenbo.robot.set_voice_trigger(False)
         listen_callback_handler = partial(dialog.handle_speak, zenbo)
         zenbo.robot.register_listen_callback(1207, listen_callback_handler)
 
         # Ask user if he wants to play
         while True:
-           result = dialog.wait_user(zenbo)
-           print("result: ", result)
+            result = dialog.wait_user(zenbo)
+            if result:
+                result = str(
+                    json.loads(result.get("user_utterance"))[0].get("result")[0]
+                )
+                LOGGER.info("Stt result str: %s", result)
+            if result == zenbo_name:
+                command = dialog.welcome(zenbo, zenbo_name)
+                zenbo.robot.speak("好的")
+                LOGGER.debug("User command: %s", command)
+                if command:
+                    command = str(
+                        json.loads(command.get("user_utterance"))[0].get("result")[0]
+                    )
+                    LOGGER.info("User command str: %s", command)
+                    llm.execute_command(command)
 
-        # Wait for response
-        # TBD
-
-        # Detect person who wants to play
-        # TBD
-        # seeking.detect_person()
-
-        # Countdown
-        # TBD
-        # dialog.start_countdown()
-
-        # Seek for the previously saved person
-        # TBD
-        # seeking.start_seeking()
-
-        # ...
-
-        # zenbo.motion.move_body(0.15, speed_level=2)
-        # zenbo.motion.move_head(pitch_degree=-10)
-        # zenbo.motion.move_head(pitch_degree=-10)
-        # zenbo.motion.move_body(0.15, speed_level=2)
-        # zenbo.cancel_command_by_serial(?)
-        # zenbo.robot.speak_and_listen("")
-
-        time.sleep(5)
-        zenbo.release()
-        sys.exit(0)
     except (KeyboardInterrupt, SystemExit):
-        print('Stopping the program...')
+        LOGGER.info("Stopping the program...")
         zenbo.release()
         sys.exit(0)
-
-if __name__ == '__main__':
-    init()

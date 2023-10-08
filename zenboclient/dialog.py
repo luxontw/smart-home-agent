@@ -4,60 +4,33 @@ and the user.
 """
 import pyzenbo
 import json
-import llm
-import hass
-import asyncio
+import logging
+
 from pyzenbo.modules.dialog_system import RobotFace
 
-global name, been_called
-name = "助理"
-been_called = False
+LOGGER = logging.getLogger()
 
 
 def handle_speak(zenbo: pyzenbo.PyZenbo, args):
     """
     Handles user speaking -- whenever user says something, Zenbo calls this function.
     """
+    LOGGER.info("handle_speak")
     event_user_utterance = args.get("event_user_utterance", None)
 
     if event_user_utterance:
-        global been_called
-        print("event_user_utterance: ", event_user_utterance)
+        LOGGER.debug("event_user_utterance:  %s", event_user_utterance)
         been_said = str(
             json.loads(event_user_utterance.get("user_utterance"))[0].get("result")[0]
         )
-        print("been_said: ", been_said)
-
-        if been_said == name:
-            welcome(zenbo)
-        elif been_called:
-            if been_said == "不用了":
-                pass
-            else:
-                print("control: ", been_said)
-                result = llm.execute_command(been_said)
-                wled_settings = json.loads(result)
-                service = wled_settings["devices"]["living_room"]["lights"]["led_strip"]["state"]
-                brightness = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
-                    "brightness"
-                 ]
-                rgb_color = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
-                  "rgb_color"
-                ]
-                effect = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
-                    "effect"
-                ]
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                asyncio.get_event_loop().run_until_complete(hass.execute(service, brightness, rgb_color, effect))
-                been_called = False
+        LOGGER.info("been_said : %s", been_said)
 
 
 def wait_user(zenbo: pyzenbo.PyZenbo):
     """
     Wait the user speak something.
     """
-    print("wait_user")
+    LOGGER.info("been_said : %s", "wait_user")
     zenbo.robot.set_expression(RobotFace.HAPPY, timeout=5)
     slu_result = zenbo.robot.wait_for_listen(
         "",
@@ -68,11 +41,11 @@ def wait_user(zenbo: pyzenbo.PyZenbo):
     return slu_result
 
 
-def welcome(zenbo: pyzenbo.PyZenbo):
+def welcome(zenbo: pyzenbo.PyZenbo, name: str):
     """
     Asks the user if he/she wants to do something.
     """
-    print("welcome")
+    LOGGER.info("been_said : %s", "welcome")
     global been_called
     been_called = True
     zenbo.robot.set_expression(RobotFace.HAPPY, timeout=5)

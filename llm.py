@@ -1,7 +1,13 @@
+import json
+import asyncio
+import logging
+
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
+import hass
 
 
+LOGGER = logging.getLogger()
 chat = ChatOpenAI(temperature=0.0)
 
 
@@ -79,5 +85,16 @@ def execute_command(command):
     )
 
     status_update = chat(status_update_prompt)
-    print(status_update.content)
-    return status_update.content
+    LOGGER.debug("IoT config: %s", status_update.content)
+    wled_settings = json.loads(status_update.content)
+    service = wled_settings["devices"]["living_room"]["lights"]["led_strip"]["state"]
+    brightness = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
+        "brightness"
+    ]
+    rgb_color = wled_settings["devices"]["living_room"]["lights"]["led_strip"][
+        "rgb_color"
+    ]
+    effect = wled_settings["devices"]["living_room"]["lights"]["led_strip"]["effect"]
+    asyncio.get_event_loop().run_until_complete(
+        hass.execute(service, brightness, rgb_color, effect)
+    )
