@@ -25,9 +25,9 @@ def init(config: dict):
         listen_callback_handler = partial(dialog.handle_speak, zenbo)
         zenbo.robot.register_listen_callback(1207, listen_callback_handler)
 
-        # Ask user if he wants to play
+        # Dialogue main logic
         while True:
-            result = dialog.wait_user(zenbo)
+            result = dialog.wait_user_speak(zenbo)
             if result:
                 result = str(
                     json.loads(result.get("user_utterance"))[0].get("result")[0]

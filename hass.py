@@ -16,10 +16,10 @@ def init(config: dict) -> None:
 
 async def execute(service, brightness, rgb_color, effect) -> None:
     async with ClientSession() as session:
-        await control(session, service, brightness, rgb_color, effect)
+        await call(session, service, brightness, rgb_color, effect)
 
 
-async def control(
+async def call(
     session: ClientSession,
     service,
     brightness,

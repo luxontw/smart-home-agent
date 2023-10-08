@@ -26,12 +26,12 @@ def handle_speak(zenbo: pyzenbo.PyZenbo, args):
         LOGGER.info("been_said : %s", been_said)
 
 
-def wait_user(zenbo: pyzenbo.PyZenbo):
+def wait_user_speak(zenbo: pyzenbo.PyZenbo):
     """
     Wait the user speak something.
     """
     LOGGER.info("been_said : %s", "wait_user")
-    zenbo.robot.set_expression(RobotFace.HAPPY, timeout=5)
+    zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
     slu_result = zenbo.robot.wait_for_listen(
         "",
         config={
@@ -56,6 +56,7 @@ def welcome(zenbo: pyzenbo.PyZenbo, name: str):
             "listenLanguageId": 1,
         },
     )
+    zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
     return slu_result
 
 
