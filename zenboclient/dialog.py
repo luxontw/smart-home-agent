@@ -56,7 +56,7 @@ def welcome(zenbo: pyzenbo.PyZenbo, name: str):
             "listenLanguageId": 1,
         },
     )
-    zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
+    zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
     return slu_result
 
 

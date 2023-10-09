@@ -5,6 +5,8 @@ import logging
 import llm
 from functools import partial
 from zenboclient import dialog, navigation, seeking, comm
+from pyzenbo.modules.dialog_system import RobotFace
+
 
 LOGGER = logging.getLogger()
 
@@ -42,8 +44,9 @@ def init(config: dict):
                         json.loads(command.get("user_utterance"))[0].get("result")[0]
                     )
                     LOGGER.info("User command str: %s", command)
-                    llm.get_device_status()
-                    # llm.execute_command(command)
+                    llm.execute_command(command)
+                    zenbo.robot.set_expression(RobotFace.CONFIDENT_ADV, timeout=5)
+                    zenbo.robot.speak("完成")
 
     except (KeyboardInterrupt, SystemExit):
         LOGGER.info("Stopping the program...")
