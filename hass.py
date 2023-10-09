@@ -3,34 +3,38 @@ import logging
 from aiohttp import ClientSession
 
 from hassclient import HomeAssistantClient
-from hassclient.models import Event
+from hassclient.models import Event, State
 
 
 LOGGER = logging.getLogger()
 
 
 def init(config: dict) -> None:
-    global args
+    global args, session
     args = config
+    session = ClientSession()
 
 
-async def execute(service, brightness, rgb_color, effect) -> None:
-    async with ClientSession() as session:
-        await call(session, service, brightness, rgb_color, effect)
+async def get_states() -> State:
+    """Connect to the server."""
+    global args, session
+    async with HomeAssistantClient(
+        args["hass_endpoint"], args["hass_token"], session
+    ) as client:
+        state = await client.get_states()
+        return state
 
 
 async def call(
-    session: ClientSession,
     service,
     brightness,
     rgb_color,
     effect,
 ) -> None:
     """Connect to the server."""
-    global args
-    websocket_url = args["hass_endpoint"]
+    global args, session
     async with HomeAssistantClient(
-        websocket_url, args["hass_token"], session
+        args["hass_endpoint"], args["hass_token"], session
     ) as client:
         if service == "turn_on":
             await client.call_service(

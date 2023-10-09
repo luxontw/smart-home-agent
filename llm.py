@@ -11,6 +11,12 @@ LOGGER = logging.getLogger()
 chat = ChatOpenAI(temperature=0.0)
 
 
+def get_device_status():
+    asyncio.get_event_loop().run_until_complete(
+        hass.get_states()
+    )
+
+
 def execute_command(command):
     template_string = """ \
     You are an Al that controls a smart home. \
@@ -23,44 +29,6 @@ def execute_command(command):
     Provide your response in JSON format.
     """
     user_command = command
-    # device_status = """ \
-    # { \
-    #     "user": { \
-    #         "location": "living_room" \
-    #     }, \
-    #     "devices": { \
-    #         "living_room": { \
-    #             "lights": { \
-    #                 "overhead": { \
-    #                     "state": "on" \
-    #                 }, \
-    #                 "lamp": { \
-    #                     "state": "off" \
-    #                 } \
-    #             }, \
-    #             "tvs": { \
-    #                 "living_room_tv": { \
-    #                     "state": "off", \
-    #                     "volume": 0 \
-    #                 } \
-    #             }, \
-    #             "speakers": { \
-    #                 "living_room_speaker": { \
-    #                     "state": "on", \
-    #                     "volume": 0 \
-    #                 } \
-    #             } \
-    #         }, \
-    #         "bedroom": { \
-    #             "lights": { \
-    #                 "bedside_lamp": { \
-    #                     "state": "on" \
-    #                 } \
-    #             } \
-    #         } \
-    #     } \
-    # }
-    # """
 
     device_status = """ \
     { \
@@ -96,5 +64,5 @@ def execute_command(command):
     ]
     effect = wled_settings["devices"]["living_room"]["lights"]["led_strip"]["effect"]
     asyncio.get_event_loop().run_until_complete(
-        hass.execute(service, brightness, rgb_color, effect)
+        hass.call(service, brightness, rgb_color, effect)
     )

@@ -42,7 +42,8 @@ def init(config: dict):
                         json.loads(command.get("user_utterance"))[0].get("result")[0]
                     )
                     LOGGER.info("User command str: %s", command)
-                    llm.execute_command(command)
+                    llm.get_device_status()
+                    # llm.execute_command(command)
 
     except (KeyboardInterrupt, SystemExit):
         LOGGER.info("Stopping the program...")
