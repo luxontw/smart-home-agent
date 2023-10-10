@@ -30,22 +30,9 @@ def execute_command(command):
     """
     user_command = command
 
-    device_status = """ \
-    { \
-        "devices": { \
-            "living_room": { \
-                "lights": { \
-                    "led_strip": { \
-                        "state": "turn_off" \
-                        "brightness": 0 \
-                        "rgb_color": [0, 0, 0] \
-                        "effect": "Solid" \
-                    } \
-                } \
-            } \
-        } \
-    }
-    """
+    device_status = asyncio.get_event_loop().run_until_complete(
+        hass.get_states()
+    )
 
     prompt_template = ChatPromptTemplate.from_template(template_string)
     status_update_prompt = prompt_template.format_messages(
