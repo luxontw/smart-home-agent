@@ -1,6 +1,5 @@
 .env
 .vscode/
-http_cache/
 __pycache__/
 dl-iot-assistant/
 pyzenbo/build/
