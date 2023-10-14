@@ -41,22 +41,29 @@ def wait_user_speak(zenbo: pyzenbo.PyZenbo):
     return slu_result
 
 
-def welcome(zenbo: pyzenbo.PyZenbo, name: str):
+def welcome(zenbo: pyzenbo.PyZenbo, name: str, been_called: bool = False):
     """
     Asks the user if he/she wants to do something.
     """
     LOGGER.info("been_said : %s", "welcome")
-    global been_called
-    been_called = True
     zenbo.robot.set_expression(RobotFace.HAPPY, timeout=5)
-    zenbo.robot.speak("你好我是" + name + "，很高興認識你。")
-    slu_result = zenbo.robot.wait_for_listen(
-        "需要什麼協助嗎?",
-        config={
-            "listenLanguageId": 1,
-        },
-    )
-    zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
+    if been_called:
+        slu_result = zenbo.robot.wait_for_listen(
+            "你好",
+            config={
+                "listenLanguageId": 1,
+            },
+        )
+        zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
+    else:
+        zenbo.robot.speak("你好我是" + name + "，很高興認識你。")
+        slu_result = zenbo.robot.wait_for_listen(
+            "需要什麼協助嗎?",
+            config={
+                "listenLanguageId": 1,
+            },
+        )
+        zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
     return slu_result
 
 

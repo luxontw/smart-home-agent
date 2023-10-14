@@ -23,6 +23,9 @@ def init(config: dict):
 
     try:
         # Initialize
+        been_called = False
+        reply = "好的"
+        response = None
         zenbo.robot.set_voice_trigger(False)
         listen_callback_handler = partial(dialog.handle_speak, zenbo)
         zenbo.robot.register_listen_callback(1207, listen_callback_handler)
@@ -35,18 +38,30 @@ def init(config: dict):
                     json.loads(result.get("user_utterance"))[0].get("result")[0]
                 )
                 LOGGER.info("Stt result str: %s", result)
-            if result == zenbo_name:
-                command = dialog.welcome(zenbo, zenbo_name)
-                zenbo.robot.speak("好的")
-                LOGGER.debug("User command: %s", command)
-                if command:
-                    command = str(
-                        json.loads(command.get("user_utterance"))[0].get("result")[0]
-                    )
-                    LOGGER.info("User command str: %s", command)
-                    llm.execute_command(command)
-                    zenbo.robot.set_expression(RobotFace.CONFIDENT_ADV, timeout=5)
-                    zenbo.robot.speak("完成")
+                if result == zenbo_name:
+                    command = dialog.welcome(zenbo, zenbo_name, been_called)
+                    LOGGER.debug("User command: %s", command)
+                    if command:
+                        command = str(
+                            json.loads(command.get("user_utterance"))[0].get("result")[
+                                0
+                            ]
+                        )
+                        LOGGER.info("User command str: %s", command)
+                        response = llm.test_command(command)
+                        zenbo.robot.set_expression(RobotFace.CONFIDENT_ADV, timeout=5)
+                        if response["action"] == "command":
+                            reply = response["comment"]
+                        elif response["action"] == "query":
+                            reply = response["summarize"]
+                        elif response["action"] == "answer":
+                            reply = response["answer"]
+                        elif response["action"] == "clarify":
+                            reply = response["question"]
+                        zenbo.robot.speak(reply)
+                        been_called = True
+                        reply = "好的"
+                        response = None
 
     except (KeyboardInterrupt, SystemExit):
         LOGGER.info("Stopping the program...")
