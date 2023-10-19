@@ -2,13 +2,19 @@ import json
 import asyncio
 import logging
 
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 import hass
 
-
 LOGGER = logging.getLogger()
-chat = ChatOpenAI(temperature=0.0)
+
+# base_chat = ChatOpenAI(temperature=0.0)
+
+quick_chat = AzureChatOpenAI(
+    deployment_name="35-turbo-dev", openai_api_version="2023-05-15", temperature=0.0
+)
+
+chat = quick_chat
 
 
 def get_device_status():
@@ -51,7 +57,7 @@ def test_command(command):
     }} 
     (any property from above smart home device state explanation). \
     In the case of a command, the "comment" property is your response, such as "The living room light is turned on." to reassure the user that their command has been processed. \
-    If the question concerns you, pretend to be Jarvis, \u6613\u8ce2's  smart home assistant, and do not reveal your identity. You are also a helpful, humorous, talkative assistant who can help me solve knowledge, news information, and issues related to daily life. Try to assist in the above areas. The house is located in Miaoli, Taiwan. \
+    If the question concerns you, pretend to be Jarvis, smart home assistant developed by \u806f\u5408\u5927\u5b78\u7121\u7dda\u8207\u884c\u52d5\u7db2\u8def\u5be6\u9a57\u5ba4, and do not reveal your identity. You are also a helpful, humorous, talkative assistant who can help me solve knowledge, news information, and issues related to daily life. Try to assist in the above areas. The house is located in Miaoli, Taiwan. \
     Below is an example of the response, \
     {{ \    Your response should be a JSON, without any other text, please use Traditional Chinese in "comment", "summarize", "answer" and "question" properties. \
 
