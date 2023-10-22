@@ -1,25 +1,65 @@
-from transformers import (
-    Blip2VisionConfig,
-    Blip2QFormerConfig,
-    OPTConfig,
-    Blip2Config,
-    Blip2ForConditionalGeneration,
-)
+import requests
+from PIL import Image
 
-# Initializing a Blip2Config with Salesforce/blip2-opt-2.7b style configuration
-configuration = Blip2Config()
+url = 'https://storage.googleapis.com/sfr-vision-language-research/LAVIS/assets/merlion.png' 
+image = Image.open(requests.get(url, stream=True).raw).convert('RGB')
 
-# Initializing a Blip2ForConditionalGeneration (with random weights) from the Salesforce/blip2-opt-2.7b style configuration
-model = Blip2ForConditionalGeneration(configuration)
+from transformers import AutoProcessor, Blip2ForConditionalGeneration
+import torch
 
-# Accessing the model configuration
-configuration = model.config
+processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
+# by default `from_pretrained` loads the weights in float32
+# we load in float16 instead to save memory
+model = Blip2ForConditionalGeneration.from_pretrained("Salesforce/blip2-opt-2.7b", torch_dtype=torch.float16) 
 
-# We can also initialize a Blip2Config from a Blip2VisionConfig, Blip2QFormerConfig and any PretrainedConfig
+import torch
 
-# Initializing BLIP-2 vision, BLIP-2 Q-Former and language model configurations
-vision_config = Blip2VisionConfig()
-qformer_config = Blip2QFormerConfig()
-text_config = OPTConfig()
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model.to(device)
 
-config = Blip2Config.from_text_vision_configs(vision_config, qformer_config, text_config)
+inputs = processor(image, return_tensors="pt").to(device, torch.float16)
+
+generated_ids = model.generate(**inputs, max_new_tokens=20)
+generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+print(generated_text)
+
+prompt = "this is a picture of"
+
+inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
+
+generated_ids = model.generate(**inputs, max_new_tokens=20)
+generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+print(generated_text)
+
+prompt = "the weather looks"
+
+inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
+
+generated_ids = model.generate(**inputs, max_new_tokens=20)
+generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+print(generated_text)
+
+prompt = "Question: which city is this? Answer:"
+
+inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
+
+generated_ids = model.generate(**inputs, max_new_tokens=10)
+generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+print(generated_text)
+
+context = [
+    ("which city is this?", "singapore"),
+    ("why?", "it has a statue of a merlion"),
+]
+question = "where is the name merlion coming from?"
+template = "Question: {} Answer: {}."
+
+prompt = " ".join([template.format(context[i][0], context[i][1]) for i in range(len(context))]) + " Question: " + question + " Answer:"
+
+print(prompt)
+
+inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
+
+generated_ids = model.generate(**inputs, max_new_tokens=10)
+generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+print(generated_text)

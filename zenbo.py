@@ -48,7 +48,7 @@ def init(config: dict):
                             ]
                         )
                         LOGGER.info("User command str: %s", command)
-                        response = lang.test_command(command)
+                        response = lang.execute_command(command)
                         zenbo.robot.set_expression(RobotFace.CONFIDENT_ADV, timeout=5)
                         if response["action"] == "command":
                             reply = response["comment"]

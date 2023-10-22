@@ -16,145 +16,72 @@ def init(config: dict) -> None:
     session = ClientSession()
 
 
-async def get_states() -> State:
+async def get_all_states() -> dict:
     """Connect to the server."""
     global args, session
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
         states = await client.get_states()
-        for state in states:
-            if state["entity_id"] == "light.wled":
-                LOGGER.debug("Received state: %s", state)
-                device_status = f""" \
-                {{ \
-                    "devices": {{ \
-                        "living_room": {{ \
-                            "lights": {{ \
-                                "led_strip": {{ \
-                                    "state": "turn_{state["state"]}" \
-                                    "brightness": {0 if state["state"] == "off" else state["attributes"]["brightness"]} \
-                                    "rgb_color": {[0, 0, 0] if state["state"] == "off" else state["attributes"]["rgb_color"]}  \
-                                    "effect": "{"none" if state["state"] == "off" else state["attributes"]["effect"]}"  \
-                                }} \
-                            }} \
-                        }} \
-                    }} \
-                }}
-                """
-                LOGGER.debug("Sending device status: %s", device_status)
-                return device_status
+        LOGGER.debug("Received states: %s", states)
+        return states
 
 
-async def get_states_test() -> State:
-    """Connect to the server."""
-    global args, session, device_status
-    async with HomeAssistantClient(
-        args["hass_endpoint"], args["hass_token"], session
-    ) as client:
-        states = await client.get_states()
-        device_status = f"""
-        {{ \
-            "devices": {{ \
-                "fans": {{ \
-        """
-        for state in states:
-            if state["entity_id"] == "fan.dian_feng_shan_socket_1":
-                device_status += f""" \
-                    "{state["attributes"]["friendly_name"]}": {{ \
-                        "entity_id": "{state["entity_id"]}", \
-                        "state": "{state["state"]}", \
-                        "area"  : "bedroom" \
-                    }} \
-                 }}, \
-                """
-            if state["entity_id"] == "light.wled":
-                device_status += f""" \
-                    "{state["attributes"]["friendly_name"]}": {{ \
-                        "entity_id": "{state["entity_id"]}", \
-                        "state": "{state["state"]}", \
-                        "brightness": {0 if state["state"] == "off" else state["attributes"]["brightness"]} ,\
-                        "rgb_color": {[0, 0, 0] if state["state"] == "off" else state["attributes"]["rgb_color"]}  ,\
-                        "effect": "{"none" if state["state"] == "off" else state["attributes"]["effect"]}"  ,\
-                        "area"  : "bedroom" \
-                    }} \
-                }} \
-                """
-            if state["entity_id"] == "light.desk_lamp":
-                device_status += f""" \
-                "lights": {{ \
-                    "{state["attributes"]["friendly_name"]}": {{ \
-                        "entity_id": "{state["entity_id"]}", \
-                        "state": "{state["state"]}" ,\
-                        "brightness": {0 if state["state"] == "off" else state["attributes"]["brightness"]} ,\
-                        "color_temp_kelvin": {0 if state["state"] == "off" else state["attributes"]["color_temp_kelvin"]}, \
-                        "area"  : "study_room" \
-                    }}, \
-                """
-            # LOGGER.debug("Received state: %s", state)
-    device_status += f""" \
-        }} \
-    }} \
-    """
-    LOGGER.debug("Sending device status: %s", device_status)
-    return device_status
-
-
-async def call_test(
-    service,
-    entity_id,
-    value,
-) -> None:
+async def get_device_registry() -> json:
     """Connect to the server."""
     global args, session
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
-        if entity_id == "light.desk_lamp" and value:
-            if "brightness" in value:
-                value["brightness"] = float(int(value["brightness"]) * 255 / 100)
-        if service == "fan.turn_on":
-            await client.call_service(
-                "fan",
-                "turn_on",
-                value,
-                {"entity_id": entity_id},
-            )
-        elif service == "fan.turn_off":
-            await client.call_service("fan", "turn_off", {"entity_id": entity_id})
-        if service == "light.turn_on":
-            await client.call_service(
-                "light",
-                "turn_on",
-                value,
-                {"entity_id": entity_id},
-            )
-        elif service == "light.turn_off":
-            await client.call_service("light", "turn_off", {"entity_id": entity_id})
-        await asyncio.sleep(5)
+        device_registry = await client.get_device_registry()
+        response = {}
+        cache = {}
+        for device in device_registry:
+            if device["area_id"] != None and device["name_by_user"] != None:
+                area = device["area_id"]
+                name = device["name_by_user"]
+                if area not in response:
+                    response[area] = {}
+                    response[area][name] = {}
+                else:
+                    response[area][name] = {}
+                cache[name] = area
+
+        states = await client.get_states()
+        for state in states:
+            str = state["entity_id"]
+            name = str[str.rfind(".") + 1 :].replace("_", " ")
+            if name in cache:
+                response[cache[name]][name] = state["attributes"]
+                response[cache[name]][name]["entity_id"] = state["entity_id"]
+                response[cache[name]][name]["state"] = state["state"]
+        response = json.dumps(response)
+        LOGGER.debug("Received device registry: %s", response)
+        return response
 
 
 async def call(
     service,
-    brightness,
-    rgb_color,
-    effect,
+    entity_id,
+    attributes,
 ) -> None:
     """Connect to the server."""
     global args, session
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
-        if service == "turn_on":
-            await client.call_service(
-                "light",
-                service,
-                {"brightness": brightness, "rgb_color": rgb_color, "effect": effect},
-                {"entity_id": "light.wled"},
-            )
-        else:
-            await client.call_service("light", service, {"entity_id": "light.wled"})
-        await asyncio.sleep(5)
+        # if entity_id == "light.desk_lamp" and attributes:
+        #     if "brightness" in attributes:
+        #         attributes["brightness"] = float(
+        #             int(attributes["brightness"]) * 255 / 100
+        #         )
+        domain, service = service.split(".")
+        await client.call_service(
+            domain,
+            service,
+            attributes,
+            {"entity_id": entity_id},
+        )
 
 
 def log_events(event: Event) -> None:
@@ -180,4 +107,4 @@ if __name__ == "__main__":
     logging.basicConfig(level=level)
     with suppress(KeyboardInterrupt):
         init(config)
-        asyncio.get_event_loop().run_until_complete(get_states_test())
+        asyncio.get_event_loop().run_until_complete(get_device_registry())

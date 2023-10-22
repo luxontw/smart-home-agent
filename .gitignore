@@ -1,5 +1,7 @@
 .env
+hass.db
 .vscode/
+devtool/
 __pycache__/
 dl-iot-assistant/
 pyzenbo/build/
