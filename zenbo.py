@@ -1,10 +1,10 @@
 import sys
-import json
+import orjson as json
 import logging
 
 import lang
 from functools import partial
-from zenboclient import dialog, navigation, seeking, comm
+from zenboclient import dialog, comm
 from pyzenbo.modules.dialog_system import RobotFace
 
 

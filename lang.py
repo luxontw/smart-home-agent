@@ -1,4 +1,4 @@
-import json
+import orjson as json
 import asyncio
 import logging
 
@@ -24,6 +24,7 @@ def init(config: dict):
 
 def get_device_setup():
     response = asyncio.get_event_loop().run_until_complete(hass.get_device_registry())
+    print(response)
     return response
 
 

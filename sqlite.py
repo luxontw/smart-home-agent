@@ -1,7 +1,7 @@
 import logging
 import sqlite3
 import asyncio
-import json
+import orjson as json
 
 import hass
 

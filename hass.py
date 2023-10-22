@@ -1,6 +1,6 @@
 import asyncio
 import logging
-import json
+import orjson as json
 from aiohttp import ClientSession
 
 from hassclient import HomeAssistantClient
@@ -16,7 +16,7 @@ def init(config: dict) -> None:
     session = ClientSession()
 
 
-async def get_all_states() -> dict:
+async def get_all_states() -> State:
     """Connect to the server."""
     global args, session
     async with HomeAssistantClient(
@@ -70,11 +70,16 @@ async def call(
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
-        # if entity_id == "light.desk_lamp" and attributes:
-        #     if "brightness" in attributes:
-        #         attributes["brightness"] = float(
-        #             int(attributes["brightness"]) * 255 / 100
-        #         )
+        if attributes and entity_id == "light.lamp":
+            if "brightness" in attributes:
+                brightness = int(attributes["brightness"])
+                if brightness > 100:
+                    brightness = float(brightness / 255) * 255
+                else:
+                    brightness = float(brightness / 100) * 255
+                attributes["brightness"] = round(brightness, 0)
+        if "state" in attributes:
+            del attributes["state"]
         domain, service = service.split(".")
         await client.call_service(
             domain,

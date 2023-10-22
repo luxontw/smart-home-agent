@@ -65,10 +65,3 @@ def welcome(zenbo: pyzenbo.PyZenbo, name: str, been_called: bool = False):
         )
         zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
     return slu_result
-
-
-def say_fine(zenbo: pyzenbo.PyZenbo):
-    """
-    FFFFINE.
-    """
-    zenbo.robot.speak("Fine.")
