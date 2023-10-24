@@ -24,7 +24,11 @@ def insert_state():
     states = asyncio.get_event_loop().run_until_complete(hass.get_all_states())
     data = []
     for state in states:
-        friendly_name = state["attributes"]["friendly_name"] if "friendly_name" in state["attributes"] else None
+        friendly_name = (
+            state["attributes"]["friendly_name"]
+            if "friendly_name" in state["attributes"]
+            else None
+        )
         data.append(
             (state["entity_id"], state["state"], json.dumps(state["attributes"]))
         )

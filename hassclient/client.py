@@ -122,7 +122,9 @@ class HomeAssistantClient:
             else:
                 self._loop.call_soon(cb_func, message["event"])
 
-        return await self.subscribe(handle_message, "subscribe_events", event_type=event_type)
+        return await self.subscribe(
+            handle_message, "subscribe_events", event_type=event_type
+        )
 
     async def subscribe_entities(
         self, cb_func: Callable[[EntityStateEvent], None], entities: list[str]
@@ -145,7 +147,9 @@ class HomeAssistantClient:
             else:
                 self._loop.call_soon(cb_func, message["event"])
 
-        return await self.subscribe(handle_message, "subscribe_entities", entities=entities)
+        return await self.subscribe(
+            handle_message, "subscribe_entities", entities=entities
+        )
 
     async def call_service(
         self,
@@ -165,7 +169,7 @@ class HomeAssistantClient:
         """
         if not self.connected:
             raise NotConnected("Please call connect first.")
-        msg = { "domain": domain, "service": service}
+        msg = {"domain": domain, "service": service}
         if service_data:
             msg["service_data"] = service_data
         if target:
@@ -198,9 +202,13 @@ class HomeAssistantClient:
 
     async def get_entity_registry_entry(self, entity_id: str) -> Entity:
         """Get single entry from Entity Registry."""
-        return await self.send_command("config/entity_registry/get", entity_id=entity_id)
+        return await self.send_command(
+            "config/entity_registry/get", entity_id=entity_id
+        )
 
-    async def send_command(self, command: str, **kwargs: dict[str, Any]) -> CommandResultData:
+    async def send_command(
+        self, command: str, **kwargs: dict[str, Any]
+    ) -> CommandResultData:
         """Send a command to the HA websocket and return response."""
         future: asyncio.Future[CommandResultData] = self._loop.create_future()
         if "message_id" in kwargs:
@@ -253,7 +261,9 @@ class HomeAssistantClient:
             if "subscribe" not in message_base["type"]:
                 return
             unsub_command = message_base["type"].replace("subscribe", "unsubscribe")
-            asyncio.create_task(self.send_command_no_wait(unsub_command, subscription=key))
+            asyncio.create_task(
+                self.send_command_no_wait(unsub_command, subscription=key)
+            )
 
         return remove_listener
 
@@ -267,11 +277,16 @@ class HomeAssistantClient:
             version_msg: AuthRequiredMessage = await self._client.receive_json()
             self._version = version_msg["ha_version"]
             # send authentication
-            auth_command: AuthCommandMessage = {"type": "auth", "access_token": ws_token}
+            auth_command: AuthCommandMessage = {
+                "type": "auth",
+                "access_token": ws_token,
+            }
             await self._client.send_json(auth_command)
             auth_result: AuthResultMessage = await self._client.receive_json()
             if auth_result["type"] != "auth_ok":
-                raise AuthenticationFailed(auth_result.get("message", "Authentication failed"))
+                raise AuthenticationFailed(
+                    auth_result.get("message", "Authentication failed")
+                )
         except (
             client_exceptions.WSServerHandshakeError,
             client_exceptions.ClientError,
@@ -343,7 +358,9 @@ class HomeAssistantClient:
             future = self._result_futures.get(msg["id"])
 
             if future is None:
-                LOGGER.warning("Received result for unknown message with ID: %s", msg["id"])
+                LOGGER.warning(
+                    "Received result for unknown message with ID: %s", msg["id"]
+                )
                 return
 
             if msg["success"]:

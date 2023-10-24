@@ -72,7 +72,9 @@ def execute_command(command):
 
     prompt_template = ChatPromptTemplate.from_template(template_string)
     prompt = prompt_template.format_messages(
-        user_command=user_command, device_setup=device_setup, assistant_name=assistant_name
+        user_command=user_command,
+        device_setup=device_setup,
+        assistant_name=assistant_name,
     )
     response = chat(prompt)
     LOGGER.debug("ChatGPT response: %s", response.content)
@@ -91,6 +93,7 @@ def execute_command(command):
 if __name__ == "__main__":
     from dotenv import load_dotenv
     import os
+
     load_dotenv()
     config = {
         "hass_endpoint": os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT"),
