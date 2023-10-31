@@ -13,12 +13,18 @@ LOGGER = logging.getLogger()
 def init(config: dict) -> None:
     global args, session
     args = config
-    session = ClientSession()
+    session = None
+
+
+async def get_session():
+    global session
+    if session is None:
+        session = ClientSession()
 
 
 async def get_all_states() -> State:
     """Connect to the server."""
-    global args, session
+    session = await get_session()
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
@@ -27,9 +33,9 @@ async def get_all_states() -> State:
         return states
 
 
-async def get_device_registry() -> json:
+async def get_device_registry() -> dict:
     """Connect to the server."""
-    global args, session
+    session = await get_session()
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
@@ -37,7 +43,11 @@ async def get_device_registry() -> json:
         response = {}
         cache = {}
         for device in device_registry:
-            if device["area_id"] != None and device["name_by_user"] != None:
+            if (
+                device["area_id"] != None
+                and device["name_by_user"] != None
+                and device["area_id"] != "environment"
+            ):
                 area = device["area_id"]
                 name = device["name_by_user"]
                 if area not in response:
@@ -55,7 +65,6 @@ async def get_device_registry() -> json:
                 response[cache[name]][name] = state["attributes"]
                 response[cache[name]][name]["entity_id"] = state["entity_id"]
                 response[cache[name]][name]["state"] = state["state"]
-        response = json.dumps(response)
         LOGGER.debug("Received device registry: %s", response)
         return response
 
@@ -66,7 +75,7 @@ async def call(
     attributes,
 ) -> None:
     """Connect to the server."""
-    global args, session
+    session = await get_session()
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
@@ -112,4 +121,4 @@ if __name__ == "__main__":
     logging.basicConfig(level=level)
     with suppress(KeyboardInterrupt):
         init(config)
-        asyncio.get_event_loop().run_until_complete(get_device_registry())
+        asyncio.run(get_device_registry())

@@ -23,9 +23,25 @@ def init(config: dict):
 
 
 def get_device_setup():
-    response = asyncio.get_event_loop().run_until_complete(hass.get_device_registry())
-    print(response)
-    return response
+    response = asyncio.run(hass.get_device_registry())
+    areas = list(response.keys())
+    device_setup = "There is a " + ", ".join(areas) + " in the house."
+    for area in areas:
+        devices = list(response[area].keys())
+        for device in devices:
+            if "entity_id" not in response[area][device]:
+                continue
+            device_description = (
+                'The "entity_id" property of '
+                + area
+                + "'s "
+                + device
+                + ' should be "'
+                + response[area][device]["entity_id"]
+                + '".'
+            )
+            device_setup += " " + device_description
+    return device_setup
 
 
 def execute_command(command):
@@ -80,7 +96,7 @@ def execute_command(command):
     LOGGER.debug("ChatGPT response: %s", response.content)
     response = json.loads(response.content)
     if response["action"] == "command":
-        asyncio.get_event_loop().run_until_complete(
+        asyncio.run(
             hass.call(
                 response["service"],
                 response["entity_id"],

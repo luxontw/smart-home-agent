@@ -4,6 +4,8 @@ hass.db
 devtool/
 __pycache__/
 dl-iot-assistant/
+hassclient/__pycache__/
+zenboclient/__pycache__/
 pyzenbo/build/
 pyzenbo/dist/
 pyzenbo/pyzenbo.egg-info/
