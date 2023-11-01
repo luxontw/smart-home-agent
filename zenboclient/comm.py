@@ -4,7 +4,7 @@ from pyzenbo.modules.error_code import code_to_description
 import logging
 
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger("zenboclient.comm")
 
 
 def on_state_change(serial, cmd, error, state):

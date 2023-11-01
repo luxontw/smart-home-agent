@@ -7,7 +7,7 @@ from hassclient import HomeAssistantClient
 from hassclient.models import Event, State
 
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger("hass")
 
 
 def init(config: dict) -> None:

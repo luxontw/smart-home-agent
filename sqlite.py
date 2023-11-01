@@ -5,7 +5,7 @@ import orjson as json
 
 import hass
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger("sqlite")
 
 
 def init():

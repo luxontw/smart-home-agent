@@ -6,7 +6,7 @@ from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 import hass
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger("lang")
 
 
 def init(config: dict):
@@ -16,9 +16,10 @@ def init(config: dict):
             deployment_name="35-turbo-dev",
             openai_api_version="2023-05-15",
             temperature=0.0,
+            request_timeout=60,
         )
     else:
-        chat = ChatOpenAI(temperature=0.0)
+        chat = ChatOpenAI(temperature=0.0, request_timeout=30)
     assistant_name = config["assistant_name"]
 
 
@@ -96,13 +97,16 @@ def execute_command(command):
     LOGGER.debug("ChatGPT response: %s", response.content)
     response = json.loads(response.content)
     if response["action"] == "command":
-        asyncio.run(
-            hass.call(
-                response["service"],
-                response["entity_id"],
-                response["attributes"] if "attributes" in response else None,
+        try:
+            asyncio.run(
+                hass.call(
+                    response["service"],
+                    response["entity_id"],
+                    response["attributes"] if "attributes" in response else None,
+                )
             )
-        )
+        except:
+            LOGGER.warning("hass.call error")
     return response
 
 

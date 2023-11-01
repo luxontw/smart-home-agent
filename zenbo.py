@@ -7,7 +7,7 @@ from zenboclient import dialog, comm
 from pyzenbo.modules.dialog_system import RobotFace
 
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger("zenbo")
 
 
 def init(config: dict):
@@ -22,14 +22,16 @@ def init(config: dict):
 
     try:
         # Initialize
+        zenbo.system.set_tts_volume(50)
         zenbo.robot.set_voice_trigger(False)
-        listen_callback_handler = partial(dialog.handle_speak, zenbo, config)
+        listen_callback_handler = partial(dialog.listen_callback_handler, zenbo)
         zenbo.robot.register_listen_callback(1207, listen_callback_handler)
 
         # Dialogue main logic
         while True:
             LOGGER.info("Waiting for user command...")
-            dialog.wait_user_speak(zenbo)
+            been_said = dialog.wait_user_speak(zenbo, config)
+            LOGGER.info("slu_result: %s", been_said)
 
     except (KeyboardInterrupt, SystemExit):
         LOGGER.info("Stopping the program...")
