@@ -18,7 +18,6 @@ def init(config: dict):
     LOGGER.info("Set robot IP:  %s", config["zenbo_ip"])
     LOGGER.info("Set robot name:  %s", config["zenbo_name"])
     zenbo = comm.connect_robot(config["zenbo_ip"])
-    zenbo_name = config["zenbo_name"]
 
     try:
         # Initialize
@@ -30,10 +29,13 @@ def init(config: dict):
         # Dialogue main logic
         while True:
             LOGGER.info("Waiting for user command...")
-            been_said = dialog.wait_user_speak(zenbo, config)
+            zenbo.robot.config_next_csr(1, True, sync=True, timeout=None)
+            been_said = dialog.wait_user_speak(zenbo, config["zenbo_name"])
             LOGGER.info("slu_result: %s", been_said)
 
     except (KeyboardInterrupt, SystemExit):
         LOGGER.info("Stopping the program...")
+        zenbo.robot.unregister_listen_callback()
+        zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
         zenbo.release()
         sys.exit(0)
