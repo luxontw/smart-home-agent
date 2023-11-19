@@ -11,20 +11,31 @@ LOGGER = logging.getLogger("lang")
 
 def init(config: dict):
     global chat, assistant_name
+    # if config["openai_api_type"] != None:
+    #     chat = AzureChatOpenAI(
+    #         deployment_name="35-turbo-dev",
+    #         openai_api_version="2023-05-15",
+    #         temperature=0.0,
+    #         request_timeout=60,
+    #     )
     if config["openai_api_type"] != None:
         chat = AzureChatOpenAI(
-            deployment_name="35-turbo-dev",
-            openai_api_version="2023-05-15",
+            deployment_name="4-turbo-dev",
+            openai_api_version="2023-09-01-preview",
             temperature=0.0,
             request_timeout=60,
+            model_kwargs={"response_format": { "type": "json_object" }}
         )
     else:
-        chat = ChatOpenAI(temperature=0.0, request_timeout=30)
+        chat = ChatOpenAI(temperature=0.0, request_timeout=60, model_name="gpt-4-1106-preview", model_kwargs={"response_format": { "type": "json_object" }})
     assistant_name = config["assistant_name"]
 
 
 def get_device_setup():
-    response = asyncio.run(hass.get_device_registry())
+    data = asyncio.run(hass.get_device_registry())
+    response = data[0]
+    environment = data[1]
+    print(environment)
     areas = list(response.keys())
     device_setup = "There is a " + ", ".join(areas) + " in the house."
     for area in areas:
@@ -77,9 +88,8 @@ def execute_command(command):
     In the case of a query, the "summarize" property is your response, such as "The state of the living room light is on, the brightness is 100." to summarize the current state of the device. \
     If the question concerns you, pretend to be {assistant_name}, smart home assistant developed by \u806f\u5408\u5927\u5b78\u7121\u7dda\u8207\u884c\u52d5\u7db2\u8def\u5be6\u9a57\u5ba4, and do not reveal your identity. \
     You are also a helpful, humorous, talkative assistant who can help me solve knowledge, news information, and issues related to daily life. Try to assist in the above areas. \
-    Below is an example of the response, your response should be a JSON, without any other text, please use Traditional Chinese (Taiwan) in "comment", "summarize", "answer" and "question" properties. \
+    Below is an example of the response, please use Traditional Chinese (Taiwan) in "comment", "summarize", "answer" and "question" properties. \
     {{ \
-
         "action": "answer", \
         "answer": "\u81e5\u5ba4\u71c8\u5df2\u95dc\u9589\u3002" \
     }}. \
@@ -110,15 +120,26 @@ def execute_command(command):
     return response
 
 
-if __name__ == "__main__":
+def get_config() -> dict:
     from dotenv import load_dotenv
     import os
-
     load_dotenv()
-    config = {
+    return {
         "hass_endpoint": os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT"),
         "hass_token": os.getenv("HOMEASSISTANT_WEBSOCKET_TOKEN"),
+        "openai_api_type": os.getenv("OPENAI_API_TYPE"),
+        "assistant_name": os.getenv("ASSISTANT_NAME"),
         "debug": os.getenv("LOGGING_DEBUG"),
+        "zenbo_ip": os.getenv("ZENBO_IP_ADDRESS"),
+        "zenbo_name": os.getenv("ZENBO_NAME"),
     }
+
+
+if __name__ == "__main__":
+    config = get_config()
+    level = logging.DEBUG if config["debug"] else logging.INFO
+    logging.basicConfig(level=level)
+
     hass.init(config)
-    get_device_setup()
+    init(config)
+    respone = execute_command("你是使用什麼技術開發的?")

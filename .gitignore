@@ -1,9 +1,9 @@
 .env
 hass.db
+.venv/
 .vscode/
 devtool/
 __pycache__/
-dl-iot-assistant/
 hassclient/__pycache__/
 zenboclient/__pycache__/
 pyzenbo/build/

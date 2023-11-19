@@ -41,12 +41,13 @@ async def get_device_registry() -> dict:
     ) as client:
         device_registry = await client.get_device_registry()
         response = {}
+        environment = {}
         cache = {}
+        environment["environment"] = {}
         for device in device_registry:
             if (
                 device["area_id"] != None
                 and device["name_by_user"] != None
-                and device["area_id"] != "environment"
             ):
                 area = device["area_id"]
                 name = device["name_by_user"]
@@ -65,8 +66,19 @@ async def get_device_registry() -> dict:
                 response[cache[name]][name] = state["attributes"]
                 response[cache[name]][name]["entity_id"] = state["entity_id"]
                 response[cache[name]][name]["state"] = state["state"]
+            # TODO: Avoid specifying the entity_id directly
+            elif state["entity_id"] == "weather.forecast":
+                environment["environment"]["weather"] = state["attributes"]
+                environment["environment"]["weather"]["entity_id"] = state["entity_id"]
+                environment["environment"]["weather"]["state"] = state["state"]
+            elif state["entity_id"] == "sensor.oneplus_8":
+                environment["environment"]["oneplus 8"] = state["attributes"]
+                environment["environment"]["oneplus 8"]["entity_id"] = state["entity_id"]
+                environment["environment"]["oneplus 8"]["state"] = state["state"]
+            # elif state["entity_id"] == "mass.play_media":
+            # elif state["entity_id"] == "mass.search":
         LOGGER.debug("Received device registry: %s", response)
-        return response
+        return response, environment
 
 
 async def call(
