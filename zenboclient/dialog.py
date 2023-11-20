@@ -30,7 +30,7 @@ def wait_user_speak(zenbo: pyzenbo.PyZenbo, zenbo_name: str):
             "listenLanguageId": 1,
             "alwaysListenState": 1,
         },
-        timeout=None,
+        timeout=600,
     )
     if not slu_result:
         return None

@@ -24,26 +24,31 @@ def init(config: dict):
             openai_api_version="2023-09-01-preview",
             temperature=0.0,
             request_timeout=60,
-            model_kwargs={"response_format": { "type": "json_object" }}
+            model_kwargs={"response_format": {"type": "json_object"}},
         )
     else:
-        chat = ChatOpenAI(temperature=0.0, request_timeout=60, model_name="gpt-4-1106-preview", model_kwargs={"response_format": { "type": "json_object" }})
+        chat = ChatOpenAI(
+            model_name="gpt-4-1106-preview",
+            temperature=0.0,
+            request_timeout=60,
+            model_kwargs={"response_format": {"type": "json_object"}},
+        )
     assistant_name = config["assistant_name"]
 
 
-def get_device_setup():
+def get_hass_data():
     data = asyncio.run(hass.get_device_registry())
     response = data[0]
     environment = data[1]
-    print(environment)
     areas = list(response.keys())
     device_setup = "There is a " + ", ".join(areas) + " in the house."
+    device_status = ""
     for area in areas:
         devices = list(response[area].keys())
         for device in devices:
             if "entity_id" not in response[area][device]:
                 continue
-            device_description = (
+            entity_id = (
                 'The "entity_id" property of '
                 + area
                 + "'s "
@@ -52,18 +57,29 @@ def get_device_setup():
                 + response[area][device]["entity_id"]
                 + '".'
             )
-            device_setup += " " + device_description
-    return device_setup
+            status = (
+                "The state of "
+                + area
+                + "'s "
+                + device
+                + " is "
+                + response[area][device]["state"]
+                + "."
+            )
+            device_setup += " " + entity_id
+            device_status += " " + status
+    return device_setup, device_status, environment
 
 
 def execute_command(command):
     template_string = """ \
     The user issues the command: {user_command}. \
     Smart home setup: ```{device_setup}``` \
+    Current smart home device status: ```{device_status}``` \
     Respond to requests sent to a home assistant smart home system in JSON format, which an application program in the home assistant will interpret to execute the actions. \
     The requests are divided into four categories: \
     "command": According to the user command, change the device state as appropriate. (response JSON requires properties: action, service, entity_id, attributes, comment) \
-    "query": Retrieve the status of the device from the smart home setup as per the user command. (response JSON requires properties: action, entity_id, states, summarize) \
+    "query": Retrieve the status of the device from the current smart home device status as per the user command. (response JSON requires properties: action, entity_id, states, summarize) \
     "answer": Reply with the best answer when the request is unrelated to the smart home. (response JSON requires properties: action, answer) \
     "clarify": Ask the user to specify more precisely when the operation is unclear and needs to be rephrased. This will be classified as a "question" operation. (response JSON requires properties: action, question) \
     Details on the response JSON: \
@@ -95,12 +111,16 @@ def execute_command(command):
     }}. \
     """
     user_command = command
-    device_setup = get_device_setup()
+    response = get_hass_data()
+    device_setup = response[0]
+    device_status = response[1]
+    environment = response[2]
 
     prompt_template = ChatPromptTemplate.from_template(template_string)
     prompt = prompt_template.format_messages(
         user_command=user_command,
         device_setup=device_setup,
+        device_status=device_status,
         assistant_name=assistant_name,
     )
     response = chat(prompt)
@@ -123,6 +143,7 @@ def execute_command(command):
 def get_config() -> dict:
     from dotenv import load_dotenv
     import os
+
     load_dotenv()
     return {
         "hass_endpoint": os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT"),
@@ -139,7 +160,6 @@ if __name__ == "__main__":
     config = get_config()
     level = logging.DEBUG if config["debug"] else logging.INFO
     logging.basicConfig(level=level)
-
     hass.init(config)
     init(config)
-    respone = execute_command("你是使用什麼技術開發的?")
+    respone = execute_command("書房的檯燈是亮的嗎?")
