@@ -22,17 +22,6 @@ async def get_session():
         session = ClientSession()
 
 
-async def get_all_states() -> State:
-    """Connect to the server."""
-    session = await get_session()
-    async with HomeAssistantClient(
-        args["hass_endpoint"], args["hass_token"], session
-    ) as client:
-        states = await client.get_states()
-        LOGGER.debug("Received states: %s", states)
-        return states
-
-
 async def get_device_registry() -> dict:
     """Connect to the server."""
     session = await get_session()
@@ -99,6 +88,10 @@ async def call(
                 else:
                     brightness = float(brightness / 100) * 255
                 attributes["brightness"] = round(brightness, 0)
+        if attributes and entity_id == "media_player.speaker":
+            if "media_content_type" in attributes:
+                if attributes["media_content_type"] == "music":
+                    attributes["media_content_type"] = "playlist"
         if "state" in attributes:
             del attributes["state"]
         domain, service = service.split(".")

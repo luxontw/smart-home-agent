@@ -92,6 +92,8 @@ def execute_command(command):
         "effect": "Bpm"
     }} 
     (any attributes of the device except "state" from the above smart home setup). \
+    If the user wants to play music, you can select the appropriate one from the following built-in playlists: Happy, Clam, Inspiring, Dark, Romantic, Sad, Lively, Angry as media_content_id. \
+    If there is no music that meets the user's needs, you can directly specify media_content_id. \
     The "states" property should be, for example, \
     {{
         "state": "on",
@@ -162,4 +164,4 @@ if __name__ == "__main__":
     logging.basicConfig(level=level)
     hass.init(config)
     init(config)
-    respone = execute_command("書房的檯燈是亮的嗎?")
+    respone = execute_command("幫我播悲傷的音樂")
