@@ -3,7 +3,7 @@ import orjson as json
 import logging
 
 from functools import partial
-from zenboclient import dialog, comm
+from zenboclient import dialog, comm, navigation
 from pyzenbo.modules.dialog_system import RobotFace
 
 
@@ -31,6 +31,7 @@ def init(config: dict):
             LOGGER.info("Waiting for user command...")
             zenbo.robot.config_next_csr(1, True, sync=True, timeout=None)
             been_said = dialog.wait_user_speak(zenbo, config["zenbo_name"])
+            zenbo.motion.stop_moving(zenbo)
             LOGGER.info("slu_result: %s", been_said)
 
     except (KeyboardInterrupt, SystemExit):

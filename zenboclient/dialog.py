@@ -6,6 +6,7 @@ import pyzenbo
 import json
 import logging
 import lang
+import zenboclient.navigation as navigation
 
 from pyzenbo.modules.dialog_system import RobotFace
 
@@ -30,17 +31,20 @@ def wait_user_speak(zenbo: pyzenbo.PyZenbo, zenbo_name: str):
             "listenLanguageId": 1,
             "alwaysListenState": 1,
         },
-        timeout=600,
+        timeout=5,
     )
     if not slu_result:
         return None
     global been_called, keep_chat
     been_said = str(json.loads(slu_result.get("user_utterance"))[0].get("result")[0])
-    if zenbo_name in been_said:
-        welcome(zenbo, zenbo_name, been_called)
-        been_called = True
-        keep_chat = True
-    elif been_said and keep_chat:
+    if "LVCSR_Error" in been_said or "" == been_said or " " == been_said:
+        return None
+    # if zenbo_name in been_said:
+    #     welcome(zenbo, zenbo_name, been_called)
+    been_called = True
+    keep_chat = True
+    # elif been_said and keep_chat:
+    if been_said and keep_chat:
         zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
         reply_user_command(zenbo, been_said)
     return slu_result
@@ -69,6 +73,11 @@ def reply_user_command(zenbo: pyzenbo.PyZenbo, command: str):
     if response["action"] == "command":
         reply = response["comment"]
         keep_chat = False
+        if response["entity_id"] == "scene.party":
+            navigation.dance(zenbo, reply)
+            reply = ""
+        if response["entity_id"] == "scene.sleep":
+            navigation.sleep(zenbo)
     elif response["action"] == "query":
         reply = response["summarize"]
         keep_chat = False

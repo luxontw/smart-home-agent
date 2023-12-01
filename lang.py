@@ -39,7 +39,7 @@ def init(config: dict):
 def get_hass_data():
     data = asyncio.run(hass.get_device_registry())
     response = data[0]
-    environment = data[1]
+    response1 = data[1]
     areas = list(response.keys())
     device_setup = "There is a " + ", ".join(areas) + " in the house."
     device_status = ""
@@ -68,6 +68,9 @@ def get_hass_data():
             )
             device_setup += " " + entity_id
             device_status += " " + status
+    
+    environment = "The location of user1 is the " + response1["oneplus 8"]["state"] + "."
+    print(environment)
     return device_setup, device_status, environment
 
 
@@ -92,8 +95,6 @@ def execute_command(command):
         "effect": "Bpm"
     }} 
     (any attributes of the device except "state" from the above smart home setup). \
-    If the user wants to play music, you can select the appropriate one from the following built-in playlists: Happy, Clam, Inspiring, Dark, Romantic, Sad, Lively, Angry as media_content_id. \
-    If there is no music that meets the user's needs, you can directly specify media_content_id. \
     The "states" property should be, for example, \
     {{
         "state": "on",
@@ -104,6 +105,10 @@ def execute_command(command):
     (any attributes of the device from the above smart home setup). \
     In the case of a command, the "comment" property is your response, such as "The living room light is turned on." to reassure the user that their command has been processed. \
     In the case of a query, the "summarize" property is your response, such as "The state of the living room light is on, the brightness is 100." to summarize the current state of the device. \
+    You can use "entity_id": "scene.party" to turn on the party mode. \
+    You can use "entity_id": "scene.sleep" to turn on the sleep mode. \
+    You can use "entity_id": "scene.relax" to turn on the relax mode. \
+    You can use "entity_id": "scene.birthday" to turn on the birthday mode. \
     If the question concerns you, pretend to be {assistant_name}, smart home assistant developed by \u806f\u5408\u5927\u5b78\u7121\u7dda\u8207\u884c\u52d5\u7db2\u8def\u5be6\u9a57\u5ba4, and do not reveal your identity. \
     You are also a helpful, humorous, talkative assistant who can help me solve knowledge, news information, and issues related to daily life. Try to assist in the above areas. \
     Below is an example of the response, please use Traditional Chinese (Taiwan) in "comment", "summarize", "answer" and "question" properties. \
@@ -142,6 +147,39 @@ def execute_command(command):
     return response
 
 
+def automation():
+    template_string = """ \
+    You are an Al that controls a smart home. \
+    Here is the state of the devices in the home, \
+    in JSON format. ```{device_status}``` \
+    Change the device state as appropriate. \
+    """
+    data = asyncio.run(hass.get_device_registry())
+    device_status = data[0]
+    environment = data[1]
+
+    prompt_template = ChatPromptTemplate.from_template(template_string)
+    prompt = prompt_template.format_messages(
+        device_status=device_status,
+    )
+    response = chat(prompt)
+    LOGGER.debug("ChatGPT response: %s", response.content)
+    response = json.loads(response.content)
+    # if response["action"] == "command":
+    #     try:
+    #         asyncio.run(
+    #             hass.call(
+    #                 response["service"],
+    #                 response["entity_id"],
+    #                 response["attributes"] if "attributes" in response else None,
+    #             )
+    #         )
+    #     except:
+    #         LOGGER.warning("hass.call error")
+    return response
+
+
+
 def get_config() -> dict:
     from dotenv import load_dotenv
     import os
@@ -164,4 +202,5 @@ if __name__ == "__main__":
     logging.basicConfig(level=level)
     hass.init(config)
     init(config)
-    respone = execute_command("幫我播悲傷的音樂")
+    get_hass_data()
+    execute_command("我今天生日耶。")

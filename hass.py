@@ -32,7 +32,7 @@ async def get_device_registry() -> dict:
         response = {}
         environment = {}
         cache = {}
-        environment["environment"] = {}
+        environment = {}
         for device in device_registry:
             if (
                 device["area_id"] != None
@@ -57,13 +57,13 @@ async def get_device_registry() -> dict:
                 response[cache[name]][name]["state"] = state["state"]
             # TODO: Avoid specifying the entity_id directly
             elif state["entity_id"] == "weather.forecast":
-                environment["environment"]["weather"] = state["attributes"]
-                environment["environment"]["weather"]["entity_id"] = state["entity_id"]
-                environment["environment"]["weather"]["state"] = state["state"]
+                environment["weather"] = state["attributes"]
+                environment["weather"]["entity_id"] = state["entity_id"]
+                environment["weather"]["state"] = state["state"]
             elif state["entity_id"] == "sensor.oneplus_8":
-                environment["environment"]["oneplus 8"] = state["attributes"]
-                environment["environment"]["oneplus 8"]["entity_id"] = state["entity_id"]
-                environment["environment"]["oneplus 8"]["state"] = state["state"]
+                environment["oneplus 8"] = state["attributes"]
+                environment["oneplus 8"]["entity_id"] = state["entity_id"]
+                environment["oneplus 8"]["state"] = state["state"]
             # elif state["entity_id"] == "mass.play_media":
             # elif state["entity_id"] == "mass.search":
         LOGGER.debug("Received device registry: %s", response)
@@ -92,6 +92,22 @@ async def call(
             if "media_content_type" in attributes:
                 if attributes["media_content_type"] == "music":
                     attributes["media_content_type"] = "playlist"
+        if attributes and "scene" in entity_id:
+            attributes = []
+        if attributes and entity_id == "light.led_strip_1" or entity_id == "light.led_strip":
+            if "effect" in attributes:
+                if attributes["effect"] == "party" or attributes["effect"] == "Party":
+                    attributes["effect"] = "colortwinkles" or attributes["effect"] == "Colortwinkles"
+                if attributes["effect"] == "movie" or attributes["effect"] == "Movie":
+                    attributes["effect"] = "Theater"
+                if attributes["effect"] == "cinema" or attributes["effect"] == "Cinema":
+                    attributes["effect"] = "Theater"
+                if attributes["effect"] == "music" or attributes["effect"] == "Music":
+                    attributes["effect"] = "Wavesins"
+                if attributes["effect"] == "music" or attributes["effect"] == "Music":
+                    attributes["effect"] = "Wavesins"
+                if attributes["effect"] == "relax" or attributes["effect"] == "Relax":
+                    attributes["effect"] = "Breathe"
         if "state" in attributes:
             del attributes["state"]
         domain, service = service.split(".")
