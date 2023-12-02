@@ -1,6 +1,7 @@
 import orjson as json
 import asyncio
 import logging
+from datetime import datetime
 
 from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
@@ -68,8 +69,10 @@ def get_hass_data():
             )
             device_setup += " " + entity_id
             device_status += " " + status
-    
-    environment = "The location of user1 is the " + response1["oneplus 8"]["state"] + "."
+
+    environment = (
+        "The location of user1 is the " + response1["oneplus 8"]["state"] + "."
+    )
     print(environment)
     return device_setup, device_status, environment
 
@@ -79,6 +82,10 @@ def execute_command(command):
     The user issues the command: {user_command}. \
     Smart home setup: ```{device_setup}``` \
     Current smart home device status: ```{device_status}``` \
+    Current location time: ```{current_time}``` \
+    Current location weather information: \
+    Today is 2023/12/3. The weather is cloudy and sometimes overcast, with a high temperature of 24℃, a low temperature of 17℃, and a 20% chance of rainfall. \
+    Tomorrow is 2023/12/4, the weather is rainy, the high temperature is 23℃, the low temperature is 18℃, and the probability of rainfall is 80%. \
     Respond to requests sent to a home assistant smart home system in JSON format, which an application program in the home assistant will interpret to execute the actions. \
     The requests are divided into four categories: \
     "command": According to the user command, change the device state as appropriate. (response JSON requires properties: action, service, entity_id, attributes, comment) \
@@ -105,6 +112,7 @@ def execute_command(command):
     (any attributes of the device from the above smart home setup). \
     In the case of a command, the "comment" property is your response, such as "The living room light is turned on." to reassure the user that their command has been processed. \
     In the case of a query, the "summarize" property is your response, such as "The state of the living room light is on, the brightness is 100." to summarize the current state of the device. \
+    You should put both player name and song name into "media_content_id", for example, "media_content_id": "\u5468\u6770\u502b\u7684\u7a3b\u9999". \
     You can use "entity_id": "scene.party" to turn on the party mode. \
     You can use "entity_id": "scene.sleep" to turn on the sleep mode. \
     You can use "entity_id": "scene.relax" to turn on the relax mode. \
@@ -122,12 +130,14 @@ def execute_command(command):
     device_setup = response[0]
     device_status = response[1]
     environment = response[2]
+    current_time = datetime.now().strftime("%H:%M:%S")
 
     prompt_template = ChatPromptTemplate.from_template(template_string)
     prompt = prompt_template.format_messages(
         user_command=user_command,
         device_setup=device_setup,
         device_status=device_status,
+        current_time=current_time,
         assistant_name=assistant_name,
     )
     response = chat(prompt)
@@ -179,7 +189,6 @@ def automation():
     return response
 
 
-
 def get_config() -> dict:
     from dotenv import load_dotenv
     import os
@@ -203,4 +212,4 @@ if __name__ == "__main__":
     hass.init(config)
     init(config)
     get_hass_data()
-    execute_command("我今天生日耶。")
+    

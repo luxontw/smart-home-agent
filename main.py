@@ -1,33 +1,58 @@
-import os
 import logging
+import websocket
+import helper
 from contextlib import suppress
-from dotenv import load_dotenv
 
-import zenbo
+
 import hass
 import lang
-import sqlite
+from zenboclient import dialog, comm
+from pyzenbo.modules.dialog_system import RobotFace
 
 
-def get_config() -> dict:
-    load_dotenv()
-    return {
-        "hass_endpoint": os.getenv("HOMEASSISTANT_WEBSOCKET_ENDPOINT"),
-        "hass_token": os.getenv("HOMEASSISTANT_WEBSOCKET_TOKEN"),
-        "openai_api_type": os.getenv("OPENAI_API_TYPE"),
-        "assistant_name": os.getenv("ASSISTANT_NAME"),
-        "debug": os.getenv("LOGGING_DEBUG"),
-        "zenbo_ip": os.getenv("ZENBO_IP_ADDRESS"),
-        "zenbo_name": os.getenv("ZENBO_NAME"),
-    }
+config = helper.get_config()
+LOGGER = logging.getLogger("app")
+zenbo = comm.connect_robot(config["zenbo_ip"])
+zenbo.system.set_tts_volume(20)
+zenbo.robot.set_voice_trigger(False)
+zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
+
+
+def conn():
+    websocket.enableTrace(True)
+    websocket.setdefaulttimeout(600)
+    ws = websocket.WebSocketApp(
+        "ws://127.0.0.1:8765",
+        on_message=on_message,
+        on_error=on_error,
+        on_close=on_close,
+    )
+    ws.on_open = on_open
+    ws.run_forever()
+
+
+def on_message(ws, message):
+    LOGGER.info("STT module: %s", message)
+    dialog.reply_user_command(zenbo, message)
+    zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
+
+
+def on_error(ws, error):
+    LOGGER.info("STT module: %s", error)
+
+
+def on_close(ws):
+    LOGGER.info("STT module: closed")
+
+
+def on_open(ws):
+    LOGGER.info("STT module: opened")
 
 
 if __name__ == "__main__":
-    config = get_config()
     level = logging.DEBUG if config["debug"] else logging.INFO
     logging.basicConfig(level=level)
     with suppress(KeyboardInterrupt):
         hass.init(config)
         lang.init(config)
-        sqlite.init()
-        zenbo.init(config)
+        conn()

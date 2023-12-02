@@ -11,33 +11,22 @@ LOGGER = logging.getLogger("hass")
 
 
 def init(config: dict) -> None:
-    global args, session
+    global args
     args = config
-    session = None
-
-
-async def get_session():
-    global session
-    if session is None:
-        session = ClientSession()
 
 
 async def get_device_registry() -> dict:
     """Connect to the server."""
-    session = await get_session()
+    session = ClientSession()
+    response = {}
+    environment = {}
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
         device_registry = await client.get_device_registry()
-        response = {}
-        environment = {}
         cache = {}
-        environment = {}
         for device in device_registry:
-            if (
-                device["area_id"] != None
-                and device["name_by_user"] != None
-            ):
+            if device["area_id"] != None and device["name_by_user"] != None:
                 area = device["area_id"]
                 name = device["name_by_user"]
                 if area not in response:
@@ -67,7 +56,8 @@ async def get_device_registry() -> dict:
             # elif state["entity_id"] == "mass.play_media":
             # elif state["entity_id"] == "mass.search":
         LOGGER.debug("Received device registry: %s", response)
-        return response, environment
+    await session.close()
+    return response, environment
 
 
 async def call(
@@ -76,7 +66,7 @@ async def call(
     attributes,
 ) -> None:
     """Connect to the server."""
-    session = await get_session()
+    session = ClientSession()
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
@@ -94,10 +84,16 @@ async def call(
                     attributes["media_content_type"] = "playlist"
         if attributes and "scene" in entity_id:
             attributes = []
-        if attributes and entity_id == "light.led_strip_1" or entity_id == "light.led_strip":
+        if (
+            attributes
+            and entity_id == "light.led_strip_1"
+            or entity_id == "light.led_strip"
+        ):
             if "effect" in attributes:
                 if attributes["effect"] == "party" or attributes["effect"] == "Party":
-                    attributes["effect"] = "colortwinkles" or attributes["effect"] == "Colortwinkles"
+                    attributes["effect"] = (
+                        "colortwinkles" or attributes["effect"] == "Colortwinkles"
+                    )
                 if attributes["effect"] == "movie" or attributes["effect"] == "Movie":
                     attributes["effect"] = "Theater"
                 if attributes["effect"] == "cinema" or attributes["effect"] == "Cinema":
@@ -117,6 +113,7 @@ async def call(
             attributes,
             {"entity_id": entity_id},
         )
+    await session.close()
 
 
 def log_events(event: Event) -> None:

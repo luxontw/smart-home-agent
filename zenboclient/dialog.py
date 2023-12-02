@@ -15,41 +15,6 @@ been_called = False
 keep_chat = False
 
 
-def listen_callback_handler(zenbo: pyzenbo.PyZenbo, args):
-    pass
-
-
-def wait_user_speak(zenbo: pyzenbo.PyZenbo, zenbo_name: str):
-    """
-    Wait the user speak something.
-    """
-    LOGGER.info("func: %s", "wait_user_speak")
-    zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
-    slu_result = zenbo.robot.wait_for_listen(
-        "",
-        config={
-            "listenLanguageId": 1,
-            "alwaysListenState": 1,
-        },
-        timeout=5,
-    )
-    if not slu_result:
-        return None
-    global been_called, keep_chat
-    been_said = str(json.loads(slu_result.get("user_utterance"))[0].get("result")[0])
-    if "LVCSR_Error" in been_said or "" == been_said or " " == been_said:
-        return None
-    # if zenbo_name in been_said:
-    #     welcome(zenbo, zenbo_name, been_called)
-    been_called = True
-    keep_chat = True
-    # elif been_said and keep_chat:
-    if been_said and keep_chat:
-        zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
-        reply_user_command(zenbo, been_said)
-    return slu_result
-
-
 def welcome(zenbo: pyzenbo.PyZenbo, name: str, been_called: bool = False):
     """
     Asks the user if he/she wants to do something.
@@ -68,6 +33,7 @@ def reply_user_command(zenbo: pyzenbo.PyZenbo, command: str):
     """
     LOGGER.info("func: %s", "reply_user_command")
     global keep_chat
+    zenbo.robot.set_expression(RobotFace.AWARE_RIGHT, timeout=5)
     response = lang.execute_command(command)
     zenbo.robot.set_expression(RobotFace.CONFIDENT_ADV, timeout=5)
     if response["action"] == "command":
