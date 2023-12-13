@@ -2,6 +2,8 @@ import orjson as json
 import asyncio
 import logging
 from datetime import datetime
+import requests
+
 
 from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.prompts import ChatPromptTemplate
@@ -58,6 +60,10 @@ def get_hass_data():
                 + response[area][device]["entity_id"]
                 + '".'
             )
+            # if (
+            #     response[area][device]["entity_id"] != "light.atmosphere_light"
+            #     and response[area][device]["entity_id"] != "light.led_strip_1"
+            # ):
             status = (
                 "The state of "
                 + area
@@ -69,6 +75,18 @@ def get_hass_data():
             )
             device_setup += " " + entity_id
             device_status += " " + status
+            # else:
+            #     status = (
+            #         "The state of "
+            #         + area
+            #         + "'s "
+            #         + device
+            #         + " is "
+            #         + response[area][device]["state"]
+            #         + ", the effect of the light is "
+            #         + response[area][device]["effect"]
+            #         + ", the effect list of the light is Akemi, Android, Blend, Blink, Blink Rainbow, Bouncing Balls, Bpm, Ripple, Tetrix, Twinklecat, Washing Machine, Two Dots."
+            #     )
 
     environment = (
         "The location of user1 is the " + response1["oneplus 8"]["state"] + "."
@@ -83,15 +101,15 @@ def execute_command(command):
     Smart home setup: ```{device_setup}``` \
     Current smart home device status: ```{device_status}``` \
     Current location time: ```{current_time}``` \
-    Current location weather information: \
-    Today is 2023/12/3. The weather is cloudy and sometimes overcast, with a high temperature of 24℃, a low temperature of 17℃, and a 20% chance of rainfall. \
-    Tomorrow is 2023/12/4, the weather is rainy, the high temperature is 23℃, the low temperature is 18℃, and the probability of rainfall is 80%. \
+    Current location weather information: ```{current_weather}``` \
     Respond to requests sent to a home assistant smart home system in JSON format, which an application program in the home assistant will interpret to execute the actions. \
-    The requests are divided into four categories: \
+    The requests are divided into five categories: \
     "command": According to the user command, change the device state as appropriate. (response JSON requires properties: action, service, entity_id, attributes, comment) \
     "query": Retrieve the status of the device from the current smart home device status as per the user command. (response JSON requires properties: action, entity_id, states, summarize) \
     "answer": Reply with the best answer when the request is unrelated to the smart home. (response JSON requires properties: action, answer) \
     "clarify": Ask the user to specify more precisely when the operation is unclear and needs to be rephrased. This will be classified as a "question" operation. (response JSON requires properties: action, question) \
+    "multiple_devices": Suggested states of multiple devices for the user based on user commands, select this option if the user needs to change the status of multiple devices at the same time, if the user's needs can be fulfilled through the built-in party, sleep, relax, birthday or christmas scenes, use "command" directly. (response JSON requires properties: entities, introduce) \
+    "generate_story": If the user wants to listen to a story, the title, style, and language are generated according to the user command. (response JSON requires properties: title, style, language) \
     Details on the response JSON: \
     The "action" property should be one of the request categories: "command", "query", "answer", "clarify". \
     The "service" property should be, for example, "switch.turn_on", "switch.turn_off", "light.turn_on", "light.turn_off" (any service from home assistant). \
@@ -112,7 +130,24 @@ def execute_command(command):
     (any attributes of the device from the above smart home setup). \
     In the case of a command, the "comment" property is your response, such as "The living room light is turned on." to reassure the user that their command has been processed. \
     In the case of a query, the "summarize" property is your response, such as "The state of the living room light is on, the brightness is 100." to summarize the current state of the device. \
-    You should put both player name and song name into "media_content_id", for example, "media_content_id": "\u5468\u6770\u502b\u7684\u7a3b\u9999". \
+    In the case of a multiple_devices, the "introduce" property is your response, to introduce the device settings and ask the user if they need to make any more changes. \
+    In the case of a generate_story, the "title" property is the story title,, please make sure the title is exactly what the user entered, the "style" property is the picture style, you can choose "animation" or "realistic", \
+    and the "language" property is the story language, you can choose English, Chinese, Japanese, Korean, French or German. \
+    The "entities" property should be, for example, \
+    {{ \
+        "light.lamp": {{ \
+            "state": "on", \
+            "brightness": 150 \
+        }}, \
+        "media_player.speaker": {{ \
+            "state": "playing", \
+            "media_content_id": "\u8f15\u97f3\u6a02", \
+            "media_content_type": "playlist" \
+        }} \
+    }} \
+    If the user wants to play music, you can select the appropriate one from the following built-in playlists: Happy, Clam, Inspiring, Dark, Romantic, Sad, Lively, Angry as media_content_id. \
+    If there is no music that meets the user's needs, you can directly specify media_content_id. \
+    If the user specifies the artist and song title, you should put both artist name and song title into "media_content_id", for example, "media_content_id": "\u5468\u6770\u502b\u7684\u7a3b\u9999". \
     You can use "entity_id": "scene.party" to turn on the party mode. \
     You can use "entity_id": "scene.sleep" to turn on the sleep mode. \
     You can use "entity_id": "scene.relax" to turn on the relax mode. \
@@ -129,8 +164,17 @@ def execute_command(command):
     response = get_hass_data()
     device_setup = response[0]
     device_status = response[1]
+    print(" ")
+    print(device_setup)
+    print(" ")
+    print(device_status)
+    print(" ")
     environment = response[2]
     current_time = datetime.now().strftime("%H:%M:%S")
+    current_weather = """ \
+    Today is 2023/12/10, the weather is sunny, the high temperature is 27℃, the low temperature is 20℃, and the chance of rainfall is 0%. \
+    Tomorrow is 2023/12/11. The weather will be sunny, with a high temperature of 28℃, a low temperature of 21℃, and a 10% chance of rainfall. \
+    """
 
     prompt_template = ChatPromptTemplate.from_template(template_string)
     prompt = prompt_template.format_messages(
@@ -138,11 +182,13 @@ def execute_command(command):
         device_setup=device_setup,
         device_status=device_status,
         current_time=current_time,
+        current_weather=current_weather,
         assistant_name=assistant_name,
     )
     response = chat(prompt)
     LOGGER.debug("ChatGPT response: %s", response.content)
     response = json.loads(response.content)
+    data = response
     if response["action"] == "command":
         try:
             asyncio.run(
@@ -154,7 +200,41 @@ def execute_command(command):
             )
         except:
             LOGGER.warning("hass.call error")
-    return response
+
+    if response["action"] == "generate_story":
+        try:
+            if response["style"] == "animation":
+                response["style"] = "Anything V5"
+            else:
+                response["style"] = "Lykon Dreamshaper"
+            url = "https://vpc.newxe.tw/zenbo"
+            r = {
+                "input_text": response["title"],
+                "model": response["style"],
+                "language": response["language"],
+            }
+            print(r)
+            video = requests.post(url, json=r, timeout=600)
+            print(video)
+        except Exception as e:
+            LOGGER.warning("story.call error", e)
+
+    if response["action"] == "multiple_devices":
+        try:
+            if "entities" in response:
+                response = hass.check_format(response["entities"])
+                print(response)
+                asyncio.run(
+                    hass.call_scene(
+                        "scene.apply",
+                        "",
+                        {"entities": response},
+                    )
+                )
+        except:
+            LOGGER.warning("hass.call error")
+
+    return data
 
 
 def automation():
@@ -211,5 +291,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=level)
     hass.init(config)
     init(config)
-    get_hass_data()
-    
+    execute_command("什麼是石虎?")
+
+
+# In the case of a create_scene, the "introduce" property is your response, to introduce the device settings made for this scene and ask the user if they need to make any more changes. \
+# "create_scene": Generate new scene settings for the user based on user commands, providing scene name and suggested states of multiple devices. (response JSON requires properties: scene_name, entities, introduce) \

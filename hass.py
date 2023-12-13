@@ -60,6 +60,66 @@ async def get_device_registry() -> dict:
     return response, environment
 
 
+def check_format(entities: dict) -> dict:
+    for entity_id, attributes in entities.items():
+        print(entity_id, attributes)
+        if attributes and entity_id == "light.lamp":
+            if "brightness" in attributes:
+                brightness = int(attributes["brightness"])
+                if brightness > 100:
+                    brightness = float(brightness / 255) * 255
+                else:
+                    brightness = float(brightness / 100) * 255
+                attributes["brightness"] = round(brightness, 0)
+        if attributes and entity_id == "media_player.speaker":
+            if (
+                "media_content_id" in attributes
+                or "media_content_type" in attributes
+                or attributes["state"] == "on"
+            ):
+                attributes["media_content_type"] = "playlist"
+                attributes["state"] = "playing"
+        if (
+            attributes
+            and entity_id == "light.led_strip_1"
+            or entity_id == "light.led_strip"
+        ):
+            if "effect" in attributes:
+                if attributes["effect"] == "party" or attributes["effect"] == "Party":
+                    attributes["effect"] = "Colortwinkles"
+                if attributes["effect"] == "movie" or attributes["effect"] == "Movie":
+                    attributes["effect"] = "Theater"
+                if attributes["effect"] == "cinema" or attributes["effect"] == "Cinema":
+                    attributes["effect"] = "Theater"
+                if attributes["effect"] == "music" or attributes["effect"] == "Music":
+                    attributes["effect"] = "Wavesins"
+                if attributes["effect"] == "music" or attributes["effect"] == "Music":
+                    attributes["effect"] = "Wavesins"
+                if attributes["effect"] == "relax" or attributes["effect"] == "Relax":
+                    attributes["effect"] = "Breathe"
+    return entities
+
+
+async def call_scene(
+    service,
+    entity_id,
+    attributes,
+) -> None:
+    """Connect to the server."""
+    session = ClientSession()
+    async with HomeAssistantClient(
+        args["hass_endpoint"], args["hass_token"], session
+    ) as client:
+        domain, service = service.split(".")
+        await client.call_service(
+            domain,
+            service,
+            attributes,
+            {},
+        )
+    await session.close()
+
+
 async def call(
     service,
     entity_id,
@@ -89,6 +149,8 @@ async def call(
             and entity_id == "light.led_strip_1"
             or entity_id == "light.led_strip"
         ):
+            if service == "turn_off":
+                attributes = []
             if "effect" in attributes:
                 if attributes["effect"] == "party" or attributes["effect"] == "Party":
                     attributes["effect"] = (

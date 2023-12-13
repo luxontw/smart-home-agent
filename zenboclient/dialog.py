@@ -53,6 +53,12 @@ def reply_user_command(zenbo: pyzenbo.PyZenbo, command: str):
     elif response["action"] == "clarify":
         reply = response["question"]
         keep_chat = True
+    elif response["action"] == "multiple_devices":
+        reply = response["introduce"]
+        keep_chat = False
+    elif response["action"] == "create_scene":
+        reply = response["introduce"]
+        keep_chat = False
     else:
         reply = "抱歉，我不太明白。"
     zenbo.robot.speak(reply)
