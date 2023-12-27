@@ -45,17 +45,18 @@ async def get_device_registry() -> dict:
                 response[cache[name]][name]["entity_id"] = state["entity_id"]
                 response[cache[name]][name]["state"] = state["state"]
             # TODO: Avoid specifying the entity_id directly
-            elif state["entity_id"] == "weather.forecast":
-                environment["weather"] = state["attributes"]
-                environment["weather"]["entity_id"] = state["entity_id"]
-                environment["weather"]["state"] = state["state"]
             elif state["entity_id"] == "sensor.oneplus_8":
                 environment["oneplus 8"] = state["attributes"]
                 environment["oneplus 8"]["entity_id"] = state["entity_id"]
                 environment["oneplus 8"]["state"] = state["state"]
-            # elif state["entity_id"] == "mass.play_media":
-            # elif state["entity_id"] == "mass.search":
-        LOGGER.debug("Received device registry: %s", response)
+            elif state["entity_id"] == "sensor.humidity_sensor":
+                environment["humidity sensor"] = state["attributes"]
+                environment["humidity sensor"]["entity_id"] = state["entity_id"]
+                environment["humidity sensor"]["state"] = state["state"]
+            elif state["entity_id"] == "sensor.temperature_sensor":
+                environment["temperature sensor"] = state["attributes"]
+                environment["temperature sensor"]["entity_id"] = state["entity_id"]
+                environment["temperature sensor"]["state"] = state["state"]
     await session.close()
     return response, environment
 
@@ -130,6 +131,8 @@ async def call(
     async with HomeAssistantClient(
         args["hass_endpoint"], args["hass_token"], session
     ) as client:
+        if attributes and entity_id == "fan.stand_fan":
+            attributes = []
         if attributes and entity_id == "light.lamp":
             if "brightness" in attributes:
                 brightness = int(attributes["brightness"])

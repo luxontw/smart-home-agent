@@ -16,8 +16,10 @@ zenbo.system.set_tts_volume(50)
 zenbo.robot.set_voice_trigger(False)
 zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
 
+mic = sr.Microphone(device_index=0)
+
 def get_speech_recognition():
-    with sr.Microphone() as source:
+    with mic as source:
         print("Listening...")
         try:
             audio_data = r.listen(source=source, timeout=5)
