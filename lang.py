@@ -14,6 +14,7 @@ LOGGER = logging.getLogger("lang")
 today = 1
 tomorrow = 2
 
+
 def init(config: dict):
     global chat, assistant_name
     # if config["openai_api_type"] != None:
@@ -48,16 +49,24 @@ def init(config: dict):
 
 
 def weather(date):
-    url = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-C05BB7F0-6202-4CEF-B8AC-573D1DAD6B00&locationName=%E8%8B%97%E6%A0%97%E7%B8%A3&elementName=Wx,PoP,MinT,MaxT'
+    url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-C05BB7F0-6202-4CEF-B8AC-573D1DAD6B00&locationName=%E8%8B%97%E6%A0%97%E7%B8%A3&elementName=Wx,PoP,MinT,MaxT"
     data = requests.get(url)
-    location_records = data.json()['records']['location'][0]
-    wx = location_records['weatherElement'][0]['time'][date]['parameter']['parameterName']
-    pop = location_records['weatherElement'][1]['time'][date]['parameter']['parameterName']
-    mint = location_records['weatherElement'][2]['time'][date]['parameter']['parameterName']
-    maxt = location_records['weatherElement'][3]['time'][date]['parameter']['parameterName']
+    location_records = data.json()["records"]["location"][0]
+    wx = location_records["weatherElement"][0]["time"][date]["parameter"][
+        "parameterName"
+    ]
+    pop = location_records["weatherElement"][1]["time"][date]["parameter"][
+        "parameterName"
+    ]
+    mint = location_records["weatherElement"][2]["time"][date]["parameter"][
+        "parameterName"
+    ]
+    maxt = location_records["weatherElement"][3]["time"][date]["parameter"][
+        "parameterName"
+    ]
     now = datetime.now()
     date = (now + timedelta(date - 1)).strftime("%Y/%m/%d")
-    return f' is {date}, and the weather is {wx}. The high temperature is {maxt}℃, the low temperature is {mint}℃, and the chance of rainfall is {pop}%.'
+    return f" is {date}, and the weather is {wx}. The high temperature is {maxt}℃, the low temperature is {mint}℃, and the chance of rainfall is {pop}%."
 
 
 def get_hass_data():
@@ -113,9 +122,10 @@ def get_hass_data():
     # environment = (
     #     "The location of user1 is the " + response1["oneplus 8"]["state"] + "."
     # )
+    misc = response1
     environment = f'Today{weather(today)} Tomorrow{weather(tomorrow)} The temperature of indoor is {response1["temperature sensor"]["state"]}°C. The humidity of indoor is {response1["humidity sensor"]["state"]}%. '
-    print(environment)
-    return device_setup, device_status, environment
+    print(misc)
+    return device_setup, device_status, environment, misc
 
 
 def execute_command(command):
@@ -249,6 +259,7 @@ def execute_command(command):
 
     return data
 
+
 # TODO: 小夜燈
 def automation():
     template_string = """ \
@@ -302,66 +313,78 @@ def automation():
     device_setup = response[0]
     device_status = response[1]
     current_environment_data = response[2]
+    misc = response[3]
+    try:
+        url = "https://vpc.newxe.tw/llava/i2t"
+        r = {
+            "image_url": misc["indoor camera"]["image"],
+            "prompt": "Describe in detail the current situation at my room.",
+        }
+        result = requests.post(url, json=r).json()
+        image_description = result["text"]
+    except Exception as e:
+        LOGGER.warning("i2t.call error", e)
     current_time = datetime.now().strftime("%H:%M:%S")
 
-    prompt_template = ChatPromptTemplate.from_template(template_string)
-    prompt = prompt_template.format_messages(
-        device_setup=device_setup,
-        device_status=device_status,
-        current_time=current_time,
-        current_environment_data=current_environment_data
-    )
-    LOGGER.info("ChatGPT prompt: %s", prompt)
-    response = chat(prompt)
-    LOGGER.info("ChatGPT response: %s", response.content)
-    response = json.loads(response.content)
-    data = response
-    if response["action"] == "command":
-        try:
-            asyncio.run(
-                hass.call(
-                    response["service"],
-                    response["entity_id"],
-                    response["attributes"] if "attributes" in response else None,
-                )
-            )
-        except:
-            LOGGER.warning("hass.call error")
+    # prompt_template = ChatPromptTemplate.from_template(template_string)
+    # prompt = prompt_template.format_messages(
+    #     device_setup=device_setup,
+    #     device_status=device_status,
+    #     current_time=current_time,
+    #     current_environment_data=current_environment_data,
+    # )
+    # LOGGER.info("ChatGPT prompt: %s", prompt)
+    # response = chat(prompt)
+    # LOGGER.info("ChatGPT response: %s", response.content)
+    # response = json.loads(response.content)
+    # data = response
+    # if response["action"] == "command":
+    #     try:
+    #         asyncio.run(
+    #             hass.call(
+    #                 response["service"],
+    #                 response["entity_id"],
+    #                 response["attributes"] if "attributes" in response else None,
+    #             )
+    #         )
+    #     except:
+    #         LOGGER.warning("hass.call error")
 
-    if response["action"] == "generate_story":
-        try:
-            if response["style"] == "animation":
-                response["style"] = "Anything V5"
-            else:
-                response["style"] = "Lykon Dreamshaper"
-            url = "https://vpc.newxe.tw/zenbo"
-            r = {
-                "input_text": response["title"],
-                "model": response["style"],
-                "language": response["language"],
-            }
-            print(r)
-            video = requests.post(url, json=r, timeout=600)
-            print(video)
-        except Exception as e:
-            LOGGER.warning("story.call error", e)
+    # if response["action"] == "generate_story":
+    #     try:
+    #         if response["style"] == "animation":
+    #             response["style"] = "Anything V5"
+    #         else:
+    #             response["style"] = "Lykon Dreamshaper"
+    #         url = "https://vpc.newxe.tw/zenbo"
+    #         r = {
+    #             "input_text": response["title"],
+    #             "model": response["style"],
+    #             "language": response["language"],
+    #         }
+    #         print(r)
+    #         video = requests.post(url, json=r, timeout=600)
+    #         print(video)
+    #     except Exception as e:
+    #         LOGGER.warning("story.call error", e)
 
-    if response["action"] == "multiple_devices":
-        try:
-            if "entities" in response:
-                response = hass.check_format(response["entities"])
-                print(response)
-                asyncio.run(
-                    hass.call_scene(
-                        "scene.apply",
-                        "",
-                        {"entities": response},
-                    )
-                )
-        except:
-            LOGGER.warning("hass.call error")
+    # if response["action"] == "multiple_devices":
+    #     try:
+    #         if "entities" in response:
+    #             response = hass.check_format(response["entities"])
+    #             print(response)
+    #             asyncio.run(
+    #                 hass.call_scene(
+    #                     "scene.apply",
+    #                     "",
+    #                     {"entities": response},
+    #                 )
+    #             )
+    #     except:
+    #         LOGGER.warning("hass.call error")
 
-    return data
+    # return data
+    return image_description
 
 
 def get_config() -> dict:
@@ -380,13 +403,23 @@ def get_config() -> dict:
     }
 
 
+# from zenboclient import dialog, comm
+# from pyzenbo.modules.dialog_system import RobotFace
+config = get_config()
+# zenbo = comm.connect_robot(config["zenbo_ip"])
+# zenbo.system.set_tts_volume(50)
+# zenbo.robot.set_voice_trigger(False)
+# zenbo.robot.set_expression(RobotFace.DEFAULT, timeout=5)
+
 if __name__ == "__main__":
-    config = get_config()
     level = logging.DEBUG if config["debug"] else logging.INFO
     logging.basicConfig(level=level)
     hass.init(config)
     init(config)
-    execute_command("Turn off the light.")
-    # while True:
-    #     automation()
-    #     time.sleep(15)
+    # get_hass_data()
+    # execute_command("Turn off the light.")
+    while True:
+        result = automation()
+        print(result)
+        # dialog.speak(zenbo, result)
+        time.sleep(15)

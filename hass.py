@@ -57,6 +57,17 @@ async def get_device_registry() -> dict:
                 environment["temperature sensor"] = state["attributes"]
                 environment["temperature sensor"]["entity_id"] = state["entity_id"]
                 environment["temperature sensor"]["state"] = state["state"]
+            elif state["entity_id"] == "sensor.temperature_sensor":
+                environment["temperature sensor"] = state["attributes"]
+                environment["temperature sensor"]["entity_id"] = state["entity_id"]
+                environment["temperature sensor"]["state"] = state["state"]
+            elif state["entity_id"] == "camera.cam1":
+                environment["indoor camera"] = {}
+                environment["indoor camera"]["entity_id"] = state["entity_id"]
+                environment["indoor camera"][
+                    "image"
+                ] = f'https://ha.newxe.tw{state["attributes"]["entity_picture"]}'
+
     await session.close()
     return response, environment
 
@@ -204,4 +215,5 @@ if __name__ == "__main__":
     logging.basicConfig(level=level)
     with suppress(KeyboardInterrupt):
         init(config)
-        asyncio.run(get_device_registry())
+        result = asyncio.run(get_device_registry())
+        print(result)

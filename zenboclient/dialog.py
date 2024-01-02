@@ -62,3 +62,7 @@ def reply_user_command(zenbo: pyzenbo.PyZenbo, command: str):
     else:
         reply = "抱歉，我不太明白。"
     zenbo.robot.speak(reply)
+
+
+def speak(zenbo: pyzenbo.PyZenbo, text: str):
+    zenbo.robot.speak(text)
